@@ -1,0 +1,35 @@
+SRCS		= main_printf.c
+
+SRCS_LIB	= include/*.c
+
+FICHIER_H	= include/libft.h
+
+OBJS		= ${SRCS:.c=.o}
+
+OBJS_LIB	= ${SRCS_LIB:.c=.o}
+
+NAME		= ft_printf
+
+LIB			= include/libft.a
+
+CC			= gcc
+
+CFLAGS		= -Wall -Wextra -Werror -I ${FICHIER_H}
+
+all			: ${NAME}
+
+libf		: ${OBJS_LIB}
+			  ar rc ${LIB} ${OBJS_LIB}
+
+${NAME}		: libf ${OBJS}
+			  ${CC} ${CFLAGS} ${SRCS}
+
+clean		:
+			  rm -f ${OBJS} ${OBJS_LIB}
+
+fclean		: clean
+			  rm -f ${NAME} ${LIB}
+
+re			: fclean all
+
+.PHONY		: all clean fclean re
