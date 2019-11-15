@@ -6,7 +6,7 @@
 /*   By: aduchemi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/09 17:04:58 by aduchemi          #+#    #+#             */
-/*   Updated: 2019/11/15 15:14:00 by aduchemi         ###   ########.fr       */
+/*   Updated: 2019/11/15 20:36:46 by aduchemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,40 +27,41 @@ int		ft_len_int(int n)
 	return (i);
 }
 
-void	ft_flag(const char *s, int *i, int dol, int indice)
-{	
-	int		nb;
+void	ft_indice(t_var *var, int nb, int indice)
+{
+	if (indice == 1)
+		var->larg = nb;
+	else
+		var->prec = nb;
+}
 
+void	ft_flags(const char *s, int *i, int indice, t_var *var)
+{
+	int		nb;
+	int		dol;
+
+	dol = ft_dollar(s);
 	if (ft_isdigit(s[*i]) && s[*i] != '0')
 	{
 		nb = ft_format_dol(s, i);
-		indice == 1 ? printf("largeur %d\n", nb) : printf("precision %d\n", nb);
+		ft_indice(var, nb, indice);
 	}
 	else if (s[*i] == '*')
 	{
 		*i = *i + 1;
 		if (dol == 0)
-			indice == 1 ? printf("largeur *\n") : printf("precision *\n");
+			ft_indice(var, -1, indice);
 		else if (dol == 1)
 		{
 			nb = ft_format_dol(s, i);
-			indice == 1 ? printf("largeur *m$\n") : printf("precision *m$\n");
+			ft_indice(var, nb, indice);
 		}
 	}
-}
-
-void	ft_conversion(const char *s, int *i)
-{
-	if (s[*i] == 'c' || s[*i] == 's')
-		printf("gestion char\n");
-	else if (s[*i] == 'i' || s[*i] == 'd' || s[*i] == 'u')
-		printf("gestion nb\n");
-	else if (s[*i] == 'x' || s[*i] == 'X')
-		printf("gestion hexadecimal\n");
-	else if (s[*i] == 'p')
-		printf("gestion pointeur\n");
-	else if (s[*i] == '%')
-		printf("double prct\n");
+	if (s[*i] == '.')
+	{
+		*i = *i + 1;
+		ft_flags(s, i, 2, var);
+	}
 }
 
 int		ft_format_dol(const char *s, int *i)
@@ -101,30 +102,112 @@ int		ft_dollar(const char *s)
 	return (0);
 }
 
-void	ft_arg(const char *s, int *i)
+void	ft_arg(const char *s, int *i, t_var *var)
 {
 	int		nb;
+	int		dol;
 
-	if (ft_isdigit(s[*i]) && s[*i] != 0)
+	dol = ft_dollar(s);
+	nb = 0;
+	if (dol == 1)
 	{
-		nb = ft_atoi(ft_substr(s, *i, ft_strlen(s)));
-		printf("arg =  %d\n", nb);
-		*i = *i + ft_len_int(nb) + 1;
+		if (ft_isdigit(s[*i]) && s[*i] != 0)
+		{
+			nb = ft_atoi(ft_substr(s, *i, ft_strlen(s)));
+			*i = *i + ft_len_int(nb) + 1;
+			var->arg = nb;
+		}
 	}
+}
+
+void	ft_attributs(const char *s, int *i, t_var *var)
+{
+	int		att;
+
+	att = 0;
+	while ((s[*i] == '-' || s[*i] == '0') && s[*i])
+	{
+		if (s[*i] == '0' && att != -1)
+			att = 0;
+		if (s[*i] == '-')
+			att = -1;
+		*i = *i + 1;
+	}
+	var->att = att;
+}
+
+void	ft_etoile_nb(const char *s, t_var *var, va_list aq)
+{
+	int		arg;
+	int		j;
+	int	 	nb;
+	int		n;
+	int		borne;
+	int		p;
+
+//	nb = va_arg(aq, int);
+//	printf("%d\n", nb);
+	printf("perct = %d\n", var->percent);
+	borne = 0;
+	p = 0;
+	while (s[borne] && p < var->percent)
+	{
+		if (s[borne] == '%')
+			p++;
+		if (s[borne] = '*')
+
+		if (p < var->percent)
+			borne++;
+	}
+	printf("borne = %d et p = %d\n", borne, p);
+	arg = 0;
+	j = 0;
+	while (s[j] && j < borne)
+	{
+		if (s[j] == '*')
+		{
+			arg++;
+			printf("j = %d et arg = %d\n", j, arg);
+		}
+		else if (s[j] == 'd' || s[j] == 's')
+		{
+			arg++;
+			printf("j = %d et arg = %d\n", j, arg);
+		}
+		j++;
+	}
+	n = 0;
+	while (n < arg)
+	{
+		n++;
+		nb = va_arg(aq, int);
+	}
+	nb = va_arg(aq, int);
+	var->larg = nb;
+	printf("nb = %d\n", nb);
+}
+
+void	ft_traitement(const char *s, int *i, t_var *var, va_list ap)
+{
+	*i = *i + 1;
+	var->att = 0;
+	var->larg = 0;
+	var->prec = 0;
+	ft_arg(s, i, var);
+	ft_attributs(s, i, var);
+	ft_flags(s, i, 1, var);
+	ft_conversion(s, i, var, ap);
 }
 
 void	ft_printf(const char *s, ...)
 {
-//	char		*str;
-	va_list 	ap;
-	int			i;
-//	int			nb;
-	int			dol;
+	va_list ap;
+	int		i;
+	t_var 	var;
+	int		pourcent;
 
-	//dollar?
-	dol = ft_dollar(s);
-	//gestion erreurs
-	if (ft_gestion(s, dol) == 0)
+	pourcent = 0;
+	if (ft_gestion(s) == 0)
 	{
 		va_start(ap, s);
 		i = 0;
@@ -134,49 +217,18 @@ void	ft_printf(const char *s, ...)
 				ft_putchar(s[i]);
 			else
 			{
-				i++;
-				ft_putchar('\n');
-				if (dol == 1)
-					ft_arg(s, &i);
-			//attributs
-				if (s[i] == '-' || s[i] == '0')
-				{
-					printf("attributs\n");
-					i++;
-				}
-			//largeur
-				ft_flag(s, &i, dol, 1);
-			//precision
-				if (s[i] == '.')
-				{
-					i++;
-					ft_flag(s, &i, dol, 2);
-				}
-				ft_conversion(s, &i);
+				pourcent++;
+				var.percent = pourcent;
+				ft_traitement(s, &i, &var, ap);
 			}
 			i++;
 		}
 		va_end(ap);
 	}
-	else
-		printf("erreur\n");
 }
-/*
-int		ft_dynamique()
-{
-	str = ft_substr(s, i, ft_strlen(s));
-	nb = ft_atoi(str);
-	count = 0;
-	while (count != nb)
-	{
-		str = va_arg(ap, char *);
-		count++;
-	}
-}
-*/
-int		main()
-{
-	ft_printf("hello %1$05.*5$s Llop\n", "lol");
 
+int		main(void)
+{
+	ft_printf("hello %-0*.5d Llop\n", 5, 10);
 	return (0);
 }

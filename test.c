@@ -5,7 +5,7 @@ int		main()
 	int		i;
 
 	i = -10;
-	printf("%0*d\n", 5,  i);
+	printf("%0*d, %0*d\n", 5, 10, 6, 20);
 	printf("%-10d\n\n", i);
 	
 	printf("%1$*1$d\n", i);

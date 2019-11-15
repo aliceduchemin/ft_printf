@@ -6,7 +6,7 @@
 /*   By: aduchemi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/14 16:45:44 by aduchemi          #+#    #+#             */
-/*   Updated: 2019/11/15 15:02:45 by aduchemi         ###   ########.fr       */
+/*   Updated: 2019/11/15 18:58:46 by aduchemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,14 @@
 #include "./include/libft.h"
 #include "printft.h"
 
-int		ft_gestion(const char *s, int dol)
+int		ft_gestion(const char *s)
 {
 	int		i;
 	int		nb;
-
+	int		dol;
+// a ajouter : pas de conversion, double %, msg si erreur, nb arg == nb %
+	
+	dol = ft_dollar(s);
 	i = 0;
 	while (s[i] && s[i] != '%')
 		i++;
