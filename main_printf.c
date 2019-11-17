@@ -6,7 +6,7 @@
 /*   By: aduchemi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/09 17:04:58 by aduchemi          #+#    #+#             */
-/*   Updated: 2019/11/16 21:36:26 by aduchemi         ###   ########.fr       */
+/*   Updated: 2019/11/17 01:11:01 by aduchemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,13 @@ void	ft_traitement(const char *s, int *i, t_var *var, va_list ap)
 	var->att = 1;
 	var->larg = 0;
 	var->prec = 0;
+//	ft_type_conv(s, *i, var);
 	ft_arg(s, i, var);
 	ft_attributs(s, i, var);
-	ft_flags(s, i, 1, var);
+	ft_flags_larg(s, i, var, ap);
+	ft_flags_prec(s, i, var, ap);
 	ft_conversion(s, i, var, ap);
+//	printf("traitement arg=%d, att=%d, larg=%d, prec=%d\n", var->arg, var->att, var->larg, var->prec);
 }
 
 int		ft_gestion(const char *s)
@@ -124,18 +127,19 @@ int		main(void)
 /*	ft_printf("%1$*1$d\n", i);
 	ft_printf("%1$d\n", i);
 	ft_printf("%1$05.6d\n", i);
-	ft_printf("%1$0*2$.6d\n", i, 5);
-	ft_printf("%1$0*2$.*1$d\n", i, 5, 6);
-	ft_printf("test %3$0*2$.*1$d\n", i, 5, 6);
+*///	ft_printf("%s\n", "lol");
+	ft_printf("%1$s, %2$0*3$.6d\n", "lol", i, 5);
+//	ft_printf("%1$0*2$.*3$d\n", i, 5, 6);
+/*	ft_printf("test %3$0*2$.*1$d\n", i, 5, 6);
 	ft_printf("%0*.*d\n", 5, 6, i);
 	ft_printf("%0*.6d\n", 5, i);
 	ft_printf("%05.6d\n", i);
 	
 	ft_printf("%010d\n", i);
 //	ft_printf("%%\n", i);
-*/	ft_printf("%010d\n\n", i);
+	ft_printf("%10d\n\n", i);
 	
-/*	ft_printf("%*d\n", 10, i);
+	ft_printf("%*d\n", 10, i);
 	ft_printf("%.6d\n", i);
 	ft_printf("%.*d\n\n", 6, i);
 	
