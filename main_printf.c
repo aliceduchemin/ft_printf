@@ -6,7 +6,7 @@
 /*   By: aduchemi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/09 17:04:58 by aduchemi          #+#    #+#             */
-/*   Updated: 2019/11/17 01:11:01 by aduchemi         ###   ########.fr       */
+/*   Updated: 2019/11/17 18:10:05 by aduchemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,31 @@ int		ft_len_int(int n)
 
 void	ft_traitement(const char *s, int *i, t_var *var, va_list ap)
 {
+	int		arg;
+
+	arg = 0;
 	*i = *i + 1;
 	var->arg = 0;
 	var->att = 1;
 	var->larg = 0;
-	var->prec = 0;
-//	ft_type_conv(s, *i, var);
-	ft_arg(s, i, var);
+	var->prec = 1;
+	if (ft_dollar(s) == 1)
+		ft_arg(s, i, var);
 	ft_attributs(s, i, var);
-	ft_flags_larg(s, i, var, ap);
-	ft_flags_prec(s, i, var, ap);
+	if (s[*i] != '.')
+		ft_flags(s, i, &var->larg, ap);
+	if (s[*i] == '.' && s[*i + 1] != '0')
+		ft_flags(s, i, &var->prec, ap);
+	else if (s[*i] == '.' && s[*i + 1] == '0')
+	{
+		var->prec = 0;
+		*i = *i + 2;
+	}
+	if (var->arg == 0 || var->larg == -1 || var->prec == -1)
+	{
+		ft_compte(s, var, i, &arg);
+		ft_etoile(&arg, var, ap);
+	}
 	ft_conversion(s, i, var, ap);
 //	printf("traitement arg=%d, att=%d, larg=%d, prec=%d\n", var->arg, var->att, var->larg, var->prec);
 }
@@ -121,19 +136,18 @@ int		main(void)
 	ft_printf("larg = 15 prec = 4 : %*.*d\n", 15, 4, 20);
 	ft_printf("larg = 15 : %*d\n", 15, 20);
 	ft_printf("prec = 15 : %.*d\n\n", 15, 20);
-*/
-	int		i;
-	i = 10;
-/*	ft_printf("%1$*1$d\n", i);
+
+*/	int		i;
+	i = 0;
+	ft_printf("%1$*1$d\n", i);
 	ft_printf("%1$d\n", i);
 	ft_printf("%1$05.6d\n", i);
-*///	ft_printf("%s\n", "lol");
-	ft_printf("%1$s, %2$0*3$.6d\n", "lol", i, 5);
-//	ft_printf("%1$0*2$.*3$d\n", i, 5, 6);
-/*	ft_printf("test %3$0*2$.*1$d\n", i, 5, 6);
+	ft_printf("%1$0*2$.6d\n", i, 5);
+	ft_printf("%1$0*2$.*3$d\n", i, 5, 6);
+	ft_printf("test %3$0*2$.*1$d\n", i, 5, 6);
 	ft_printf("%0*.*d\n", 5, 6, i);
 	ft_printf("%0*.6d\n", 5, i);
-	ft_printf("%05.6d\n", i);
+	ft_printf("%05.6d\n\n", i);
 	
 	ft_printf("%010d\n", i);
 //	ft_printf("%%\n", i);
@@ -141,8 +155,9 @@ int		main(void)
 	
 	ft_printf("%*d\n", 10, i);
 	ft_printf("%.6d\n", i);
-	ft_printf("%.*d\n\n", 6, i);
-	
-	ft_printf("%d\n", i);
-*/	return (0);
+	ft_printf("%.*d\n", 6, i);
+
+	ft_printf("%.0d\n", i);
+//	ft_printf("%1$s, %2$0*3$.6d\n", "lol", i, 5);
+	return (0);
 }

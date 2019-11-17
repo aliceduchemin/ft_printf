@@ -6,7 +6,7 @@
 /*   By: aduchemi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 17:38:38 by aduchemi          #+#    #+#             */
-/*   Updated: 2019/11/17 01:11:08 by aduchemi         ###   ########.fr       */
+/*   Updated: 2019/11/17 18:10:01 by aduchemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,16 @@ void	ft_compte(const char *s, t_var *var, int *i, int *arg)
 			*arg = *arg + 1;
 		j++;
 	}
+	if (var->arg == 0)
+		var->arg = *arg + 1;
 }
 
-void	ft_etoile_nb(t_var *var, int *arg, va_list aq)
+void	ft_etoile(int *arg, t_var *var, va_list ap)
 {
+	va_list	aq;
 	int		n;
 
+	va_copy(aq, ap);
 	n = 0;
 	if (var->larg == -1 && var->prec == -1)
 	{
@@ -65,6 +69,4 @@ void	ft_etoile_nb(t_var *var, int *arg, va_list aq)
 		}
 		var->larg == -1 ? (var->larg = va_arg(aq, int)) : (var->prec = va_arg(aq, int));
 	}
-	if (var->arg == 0)
-		var->arg = va_arg(aq, int);
 }
