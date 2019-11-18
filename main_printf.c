@@ -6,7 +6,7 @@
 /*   By: aduchemi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/09 17:04:58 by aduchemi          #+#    #+#             */
-/*   Updated: 2019/11/17 18:10:05 by aduchemi         ###   ########.fr       */
+/*   Updated: 2019/11/18 18:31:14 by aduchemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,15 @@ int		ft_len_int(int n)
 	int		i;
 
 	i = 0;
+	if (n == -2147483648)
+	{
+		i++;
+		n = 147483648;
+	}
+	if (n < 0)
+		n *= -1;
+	if (n == 0)
+		i++;
 	while (n)
 	{
 		n = n / 10;
@@ -36,26 +45,21 @@ void	ft_traitement(const char *s, int *i, t_var *var, va_list ap)
 	var->arg = 0;
 	var->att = 1;
 	var->larg = 0;
-	var->prec = 1;
+	var->prec = -2;
 	if (ft_dollar(s) == 1)
 		ft_arg(s, i, var);
 	ft_attributs(s, i, var);
 	if (s[*i] != '.')
 		ft_flags(s, i, &var->larg, ap);
-	if (s[*i] == '.' && s[*i + 1] != '0')
+	if (s[*i] == '.')
 		ft_flags(s, i, &var->prec, ap);
-	else if (s[*i] == '.' && s[*i + 1] == '0')
-	{
-		var->prec = 0;
-		*i = *i + 2;
-	}
 	if (var->arg == 0 || var->larg == -1 || var->prec == -1)
 	{
 		ft_compte(s, var, i, &arg);
 		ft_etoile(&arg, var, ap);
 	}
-	ft_conversion(s, i, var, ap);
 //	printf("traitement arg=%d, att=%d, larg=%d, prec=%d\n", var->arg, var->att, var->larg, var->prec);
+	ft_conversion(s, i, var, ap);
 }
 
 int		ft_gestion(const char *s)
@@ -64,7 +68,7 @@ int		ft_gestion(const char *s)
 	int		nb;
 	int		dol;
 
-	//ajouter : pas de conversionm double %, msg erreur, nb arg != nb%, flags avec mauvais format
+	//ajouter : pas de conversionm double %, msg erreur, nb arg != nb%, flags avec mauvais format, num arg 0
 	dol = ft_dollar(s);
 	i = 0;
 	while (s[i] && s[i] != '%')
@@ -122,42 +126,42 @@ void	ft_printf(const char *s, ...)
 
 int		main(void)
 {
-/*	ft_printf("larg = 4 prec = 15 : %0*.*d\n", 4, 15, 20);
-	ft_printf("larg = 15 prec = 4 : %0*.*d\n", 15, 4, 20);
-	ft_printf("larg = 15 : %0*d\n", 15, 20);
-	ft_printf("prec = 15 : %0.*d\n\n", 15, 20);
+	int		i;
+	i = -5;
+/*	ft_printf("larg = 4 prec = 15 : %0*.*d\n", 4, 15, i);
+	ft_printf("larg = 15 prec = 4 : %0*.*d\n", 15, 4, i);
+	ft_printf("larg = 15 : %0*d\n", 15, i);
+	ft_printf("prec = 15 : %0.*d\n\n", 15, i);
 
-	ft_printf("larg = 4 prec = 15 : %-*.*d\n", 4, 15, 20);
-	ft_printf("larg = 15 prec = 4 : %-*.*d\n", 15, 4, 20);
-	ft_printf("larg = 15 : %-*d\n", 15, 20);
-	ft_printf("prec = 15 : %-.*d\n\n", 15, 20);
+	ft_printf("larg = 4 prec = 15 : %-*.*d\n", 4, 15, i);
+	ft_printf("larg = 15 prec = 4 : %-*.*d\n", 15, 4, i);
+	ft_printf("larg = 15 : %-*d\n", 15, i);
+	ft_printf("prec = 15 : %-.*d\n\n", 15, i);
 
-	ft_printf("larg = 4 prec = 15 : %*.*d\n", 4, 15, 20);
-	ft_printf("larg = 15 prec = 4 : %*.*d\n", 15, 4, 20);
-	ft_printf("larg = 15 : %*d\n", 15, 20);
-	ft_printf("prec = 15 : %.*d\n\n", 15, 20);
-
-*/	int		i;
-	i = 0;
+	ft_printf("larg = 4 prec = 15 : %*.*d\n", 4, 15, i);
+	ft_printf("larg = 15 prec = 4 : %*.*d\n", 15, 4, i);
+	ft_printf("larg = 15 : %*d\n", 15, i);
+	ft_printf("prec = 15 : %.*d\n", 15, i);
+*/
 	ft_printf("%1$*1$d\n", i);
 	ft_printf("%1$d\n", i);
 	ft_printf("%1$05.6d\n", i);
 	ft_printf("%1$0*2$.6d\n", i, 5);
 	ft_printf("%1$0*2$.*3$d\n", i, 5, 6);
 	ft_printf("test %3$0*2$.*1$d\n", i, 5, 6);
+	ft_printf("test %2$0*1$.0d\n", 5, 6);
 	ft_printf("%0*.*d\n", 5, 6, i);
 	ft_printf("%0*.6d\n", 5, i);
 	ft_printf("%05.6d\n\n", i);
 	
 	ft_printf("%010d\n", i);
-//	ft_printf("%%\n", i);
-	ft_printf("%10d\n\n", i);
+	ft_printf("%10d\n", i);
 	
 	ft_printf("%*d\n", 10, i);
 	ft_printf("%.6d\n", i);
 	ft_printf("%.*d\n", 6, i);
 
 	ft_printf("%.0d\n", i);
-//	ft_printf("%1$s, %2$0*3$.6d\n", "lol", i, 5);
+	ft_printf("%1$s, %2$0*3$.6d\n", "lol", i, 5);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: aduchemi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/16 17:38:49 by aduchemi          #+#    #+#             */
-/*   Updated: 2019/11/17 18:10:03 by aduchemi         ###   ########.fr       */
+/*   Updated: 2019/11/18 15:31:49 by aduchemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,12 @@ void	ft_flags(const char *s, int *i, int *flag, va_list ap)
 
 	if (s[*i] == '.')
 		*i = *i + 1;
-	if (ft_isdigit(s[*i]) && s[*i] != '0')
+	if (s[*i] == '0')
+	{
+		*flag = 0;
+		*i = *i + 1;
+	}
+	else if (ft_isdigit(s[*i]))
 	{
 		nb = ft_atoi(ft_substr(s, *i, ft_strlen(s)));
 		*flag = nb;

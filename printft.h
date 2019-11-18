@@ -6,7 +6,7 @@
 /*   By: aduchemi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/15 11:59:21 by aduchemi          #+#    #+#             */
-/*   Updated: 2019/11/17 18:09:56 by aduchemi         ###   ########.fr       */
+/*   Updated: 2019/11/18 15:52:32 by aduchemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 typedef struct	s_var
 {
 	int			percent;
-	char		type;
 	int			arg;
 	int			att;
 	int			larg;
@@ -45,6 +44,6 @@ void			ft_etoile(int *arg, t_var *var, va_list ap);
 
 // conversion
 void			ft_conversion(const char *s, int *i, t_var *var, va_list aq);
-void			ft_conv_nb(const char *s, t_var *var, va_list aq, int *i);
+void			ft_conv_nb(t_var *var, va_list aq);
 
 #endif
