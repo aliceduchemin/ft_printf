@@ -6,7 +6,7 @@
 /*   By: aduchemi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/15 11:59:21 by aduchemi          #+#    #+#             */
-/*   Updated: 2019/11/18 15:52:32 by aduchemi         ###   ########.fr       */
+/*   Updated: 2019/11/18 20:44:10 by aduchemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,9 @@ void			ft_compte(const char *s, t_var *var, int *i, int *arg);
 void			ft_etoile(int *arg, t_var *var, va_list ap);
 
 // conversion
-void			ft_conversion(const char *s, int *i, t_var *var, va_list aq);
+void			ft_conversion(const char *s, int *i, t_var *var, va_list ap);
+void			ft_conv_char(const char *s, int *i, t_var *var, va_list ap);
 void			ft_conv_nb(t_var *var, va_list aq);
+void			ft_conv(t_var *var, int len);
 
 #endif
