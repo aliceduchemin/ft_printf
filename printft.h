@@ -6,7 +6,7 @@
 /*   By: aduchemi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/15 11:59:21 by aduchemi          #+#    #+#             */
-/*   Updated: 2019/11/18 20:44:10 by aduchemi         ###   ########.fr       */
+/*   Updated: 2019/11/19 17:50:27 by aduchemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ void			ft_arg(const char *s, int *i, t_var *var);
 void			ft_attributs(const char *s, int *i, t_var *var);
 
 // flags_m
-void			ft_flags(const char *s, int *i, int *flag, va_list ap);
+void			ft_flag_larg(const char *s, int *i, t_var *var, va_list ap);
+void			ft_flag_prec(const char *s, int *i, t_var *var, va_list ap);
 void			ft_dol_nb(t_var *var, va_list ap);
 void			ft_get_arg_dol(int nb, int *flag, va_list ap);
 
@@ -45,6 +46,7 @@ void			ft_etoile(int *arg, t_var *var, va_list ap);
 // conversion
 void			ft_conversion(const char *s, int *i, t_var *var, va_list ap);
 void			ft_conv_char(const char *s, int *i, t_var *var, va_list ap);
+int				ft_conv_char_etoile(const char *s, int *i, t_var *var, va_list ap);
 void			ft_conv_nb(t_var *var, va_list aq);
 void			ft_conv(t_var *var, int len);
 

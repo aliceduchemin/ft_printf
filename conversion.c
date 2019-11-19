@@ -6,7 +6,7 @@
 /*   By: aduchemi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/15 18:58:53 by aduchemi          #+#    #+#             */
-/*   Updated: 2019/11/18 20:44:25 by aduchemi         ###   ########.fr       */
+/*   Updated: 2019/11/19 18:30:58 by aduchemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,10 @@
 void	ft_conversion(const char *s, int *i, t_var *var, va_list ap)
 {
 //	printf("arg=%d, att=%d, larg=%d, prec=%d\n", var->arg, var->att, var->larg, var->prec);
-	if (s[*i] == 'c' || s[*i] == 's')
-		ft_conv_char(s, i, var, ap);
+	if (s[*i] == 'c')
+	   ft_conv_char(s, i, var, ap);
+	else if	(s[*i] == 's')
+		ft_conv_char_etoile(s, i, var, ap);
 	else if (s[*i] == 'i' || s[*i] == 'd' || s[*i] == 'u')
 		ft_conv_nb(var, ap);
 	else if (s[*i] == 'x' || s[*i] == 'X')
@@ -31,6 +33,43 @@ void	ft_conv_char(const char *s, int *i, t_var *var, va_list ap)
 {
 	va_list	aq;
 	int		j;
+	va_copy(aq, ap);
+//	ft_conv(var, var->arg);
+	printf("conv char arg = %d, att = %d, larg = %d, prec = %d\n", var->arg, var->att, var->larg, var->prec);
+
+	if (var->larg > 1 && var->att == 1)
+	{
+		j = 0;
+		while (j < var->larg - 1)
+		{
+			ft_putchar(' ');
+			j++;
+		}
+	}
+	j = 0;
+	while (j < var->arg - 1)
+	{
+		va_arg(aq, int);
+		j++;
+	}
+	if (s[*i] == 'c')
+		ft_putchar(va_arg(aq, int));
+	if (var->att == -1 && var->larg > 1)
+	{
+		j = 0;
+		while (j < var->larg - 1)
+		{
+			ft_putchar(' ');
+			j++;
+		}
+	}
+}
+
+int		ft_conv_char_etoile(const char *s, int *i, t_var *var, va_list ap)
+{
+	va_list	aq;
+	int		j;
+	char	*str;
 	va_copy(aq, ap);
 //	ft_conv(var, var->arg);
 	printf("conv char arg = %d, att = %d, larg = %d, prec = %d\n", var->arg, var->att, var->larg, var->prec);
@@ -53,7 +92,24 @@ void	ft_conv_char(const char *s, int *i, t_var *var, va_list ap)
 	if (s[*i] == 'c')
 		ft_putchar(va_arg(aq, int));
 	else if (s[*i] == 's')
-		ft_putstr(va_arg(aq, char *));
+	{
+		if (var->prec > 0)
+		{
+			j = 0;
+			printf("var_arg = %d\n", var->arg);
+			if (!(str = malloc(sizeof(char) * var->arg + 1)))
+				return (0);
+			str = va_arg(aq, char *);
+			while (j < var->prec)
+			{
+				ft_putchar(str[j]);
+				j++;
+			}
+			free(str);
+		}
+		else
+			ft_putstr(va_arg(aq, char *));
+	}
 	if (var->att == -1 && var->larg > 0)
 	{
 		j = 0;
@@ -63,6 +119,7 @@ void	ft_conv_char(const char *s, int *i, t_var *var, va_list ap)
 			j++;
 		}
 	}
+	return (1);
 }
 
 void	ft_conv(t_var *var, int len)
@@ -90,7 +147,7 @@ void	ft_conv_nb(t_var *var, va_list ap)
 	if (!(var->prec == 0 && var->arg == 0))
 	{
 		ft_conv(var, len);
-	//	printf("arg = %d, larg = %d, prec = %d, att = %d\n", var->arg, var->larg, var->prec, var->att);
+	///	printf("arg = %d, larg = %d, prec = %d, att = %d\n", var->arg, var->larg, var->prec, var->att);
 		if (var->arg < 0 && var->att == 0)
 			ft_putchar('-');
 		j = 0;

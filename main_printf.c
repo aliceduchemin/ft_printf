@@ -6,7 +6,7 @@
 /*   By: aduchemi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/09 17:04:58 by aduchemi          #+#    #+#             */
-/*   Updated: 2019/11/18 20:44:14 by aduchemi         ###   ########.fr       */
+/*   Updated: 2019/11/19 18:30:54 by aduchemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,16 +50,9 @@ void	ft_traitement(const char *s, int *i, t_var *var, va_list ap)
 		ft_arg(s, i, var);
 	ft_attributs(s, i, var);
 	if (s[*i] != '.')
-	{
-		ft_flags(s, i, &var->larg, ap);
-		if (var->larg < 0)
-		{
-			var->larg *= -1;
-			var->att = -1;
-		}
-	}
+		ft_flag_larg(s, i, var, ap);
 	if (s[*i] == '.')
-		ft_flags(s, i, &var->prec, ap);
+		ft_flag_prec(s, i, var, ap);
 	if (var->arg == 0 || var->larg == -1 || var->prec == -1)
 	{
 		ft_compte(s, var, i, &arg);
@@ -134,7 +127,7 @@ void	ft_printf(const char *s, ...)
 int		main(void)
 {
 	int		i;
-	i = 10;
+	i = 15;
 /*	ft_printf("larg = 4 prec = 15 : %0*.*i\n", 4, 15, i);
 	ft_printf("larg = 15 prec = 4 : %0*.*i\n", 15, 4, i);
 	ft_printf("larg = 15 : %0*i\n", 15, i);
@@ -150,14 +143,14 @@ int		main(void)
 	ft_printf("larg = 15 : %*i\n", 15, i);
 	ft_printf("prec = 15 : %.*i\n", 15, i);
 
-	ft_printf("%1$-10i\n", i);
-	ft_printf("%1$*1$i\n", i);
-	ft_printf("%1$i\n", i);
-	ft_printf("%1$05.6i\n", i);
-	ft_printf("%1$0*2$.6i\n", i, 5);
-	ft_printf("%1$0*2$.*3$i\n", i, 5, 6);
-	ft_printf("test %3$0*2$.*1$i\n", i, 5, 6);
-	ft_printf("test %2$0*1$.0i\n", 5, 6);
+	ft_printf("%1$-10d\n", i);
+	ft_printf("%1$*1$d\n", i);
+	ft_printf("%1$d\n", i);
+	ft_printf("%1$05.6d\n", i);
+	ft_printf("%1$0*2$.6d\n", i, 5);
+	ft_printf("%1$0*2$.*3$d\n", i, 5, 6);
+	ft_printf("test %3$0*2$.*1$d\n", i, 5, 6);
+	ft_printf("test %2$0*1$.0d\n", 5, 6);
 	ft_printf("%0*.*d\n", 5, 6, i);
 	ft_printf("%0*.6d\n", 5, i);
 	ft_printf("%05.6d\n\n", i);
@@ -168,8 +161,8 @@ int		main(void)
 	ft_printf("%*d\n", 10, i);
 	ft_printf("%.6d\n", i);
 	ft_printf("%.*d\n", 6, i);
-
-*/	ft_printf("%*c\n", 5, 'c');
+*/
+	ft_printf("%*c\n", 5, 'a');
 //	ft_printf("%d\n", i);
 //	ft_printf("%c\n", 'c');
 //	ft_printf("%1$s, %2$0*3$.6d\n", "lol", i, 5);
