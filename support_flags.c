@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   flags_etoile.c                                     :+:      :+:    :+:   */
+/*   support_flags.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aduchemi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/16 17:38:38 by aduchemi          #+#    #+#             */
-/*   Updated: 2019/11/19 18:30:49 by aduchemi         ###   ########.fr       */
+/*   Created: 2019/11/20 16:13:28 by aduchemi          #+#    #+#             */
+/*   Updated: 2019/11/20 17:23:02 by aduchemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,6 @@ void	ft_compte(const char *s, t_var *var, int *i, int *arg)
 			*arg = *arg + 1;
 		j++;
 	}
-	if (var->arg == 0)
-		var->arg = *arg + 1;
 }
 
 void	ft_etoile(int *arg, t_var *var, va_list ap)
@@ -82,5 +80,51 @@ void	ft_etoile(int *arg, t_var *var, va_list ap)
 		}
 		else
 			var->larg = tmp;
+	}
+}
+
+void	ft_get_arg_dol(int nb, int *flag, va_list ap)
+{
+	va_list	aq;
+	int		i;
+
+	va_copy(aq, ap);
+	i = 0;
+	while (i < nb - 1)
+	{
+		va_arg(aq, int);
+		i++;
+	}
+	*flag = va_arg(aq, int);
+}
+
+void	ft_dol_nb(t_var *var, va_list ap)
+{
+	va_list	aq;
+	int		i;
+
+	va_copy(aq, ap);
+	i = 0;
+	while (i < var->arg - 1)
+	{
+		va_arg(aq, int);
+		i++;
+	}
+	var->arg = va_arg(aq, int);
+}
+
+void	ft_flag_etoile(const char *s, int *i, int *flag, va_list ap)
+{
+	int		nb;
+
+	nb = 0;
+	*i = *i + 1;
+	if (ft_dollar(s) == 0)
+		*flag = -1;
+	else if (ft_dollar(s) == 1)
+	{
+		nb = ft_atoi(ft_substr(s, *i, ft_strlen(s)));
+		ft_get_arg_dol(nb, flag, ap);
+		*i = *i + ft_len_int(nb) + 1;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: aduchemi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/09 17:04:58 by aduchemi          #+#    #+#             */
-/*   Updated: 2019/11/19 18:30:54 by aduchemi         ###   ########.fr       */
+/*   Updated: 2019/11/20 19:50:03 by aduchemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,10 @@ void	ft_traitement(const char *s, int *i, t_var *var, va_list ap)
 	if (var->arg == 0 || var->larg == -1 || var->prec == -1)
 	{
 		ft_compte(s, var, i, &arg);
+		var->arg == 0 ? (var->arg = arg + 1) : (var->arg = var->arg);
 		ft_etoile(&arg, var, ap);
 	}
-//	printf("traitement arg=%d, att=%d, larg=%d, prec=%d\n", var->arg, var->att, var->larg, var->prec);
+//	printf("%d : arg=%d, att=%d, larg=%d, prec=%d\n", var->percent, var->arg, var->att, var->larg, var->prec);
 	ft_conversion(s, i, var, ap);
 }
 
@@ -127,7 +128,7 @@ void	ft_printf(const char *s, ...)
 int		main(void)
 {
 	int		i;
-	i = 15;
+	i = -15;
 /*	ft_printf("larg = 4 prec = 15 : %0*.*i\n", 4, 15, i);
 	ft_printf("larg = 15 prec = 4 : %0*.*i\n", 15, 4, i);
 	ft_printf("larg = 15 : %0*i\n", 15, i);
@@ -160,11 +161,16 @@ int		main(void)
 	
 	ft_printf("%*d\n", 10, i);
 	ft_printf("%.6d\n", i);
-	ft_printf("%.*d\n", 6, i);
-*/
-	ft_printf("%*c\n", 5, 'a');
-//	ft_printf("%d\n", i);
-//	ft_printf("%c\n", 'c');
-//	ft_printf("%1$s, %2$0*3$.6d\n", "lol", i, 5);
-	return (0);
+*///	ft_printf("%x\n", 10);
+	ft_printf("ici %%lol \n");
+
+/*	ft_printf("%2$*1$c\n", -5, 'a');
+	char *s = 0;
+	ft_printf("ici %*.*s\n", 5, 10, s);
+	ft_printf("ici %*.*s, %0.5d\n", 5, 10, "lol", 28);
+	ft_printf("%2$*1$s\n", 5, "lol");
+	ft_printf("%d\n", i);
+	ft_printf("%c\n", 'c');
+	ft_printf("%1$s, %2$0*3$.6d\n", "lol", i, 5);
+*/	return (0);
 }
