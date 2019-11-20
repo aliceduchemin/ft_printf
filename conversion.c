@@ -6,7 +6,7 @@
 /*   By: aduchemi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/15 18:58:53 by aduchemi          #+#    #+#             */
-/*   Updated: 2019/11/20 19:49:45 by aduchemi         ###   ########.fr       */
+/*   Updated: 2019/11/20 23:50:28 by aduchemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "./include/libft.h"
 #include "printft.h"
 
-void	ft_conversion(const char *s, int *i, t_var *var, va_list ap)
+int		ft_conversion(const char *s, int *i, t_var *var, va_list ap)
 {
 	va_list	aq;
 	int	nb;
@@ -24,11 +24,15 @@ void	ft_conversion(const char *s, int *i, t_var *var, va_list ap)
 	if (s[*i] == 'c')
 	   ft_conv_char(var, aq);
 	else if	(s[*i] == 's')
-		ft_conv_char_etoile(var, aq);
+	{
+		if (ft_conv_char_etoile(var, aq) == 0)
+			return (1);
+	}
 	else if (s[*i] == 'i' || s[*i] == 'd' || s[*i] == 'u' || s[*i] == 'x' || s[*i] == 'X' || s[*i] == 'p')
 		ft_conv_nb(var, aq, s[*i]);
 	else if (s[*i] == '%')
 		ft_putchar('%');
+	return (0);
 }
 
 void	ft_conv_char(t_var *var, va_list aq)

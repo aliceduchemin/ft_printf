@@ -6,7 +6,7 @@
 /*   By: aduchemi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/09 17:04:58 by aduchemi          #+#    #+#             */
-/*   Updated: 2019/11/20 19:50:03 by aduchemi         ###   ########.fr       */
+/*   Updated: 2019/11/20 23:50:05 by aduchemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int		ft_len_int(int n)
 	return (i);
 }
 
-void	ft_traitement(const char *s, int *i, t_var *var, va_list ap)
+int		ft_traitement(const char *s, int *i, t_var *var, va_list ap)
 {
 	int		arg;
 
@@ -60,7 +60,9 @@ void	ft_traitement(const char *s, int *i, t_var *var, va_list ap)
 		ft_etoile(&arg, var, ap);
 	}
 //	printf("%d : arg=%d, att=%d, larg=%d, prec=%d\n", var->percent, var->arg, var->att, var->larg, var->prec);
-	ft_conversion(s, i, var, ap);
+	if (ft_conversion(s, i, var, ap) == 1)
+		return (1);
+	return (0);
 }
 
 int		ft_gestion(const char *s)
@@ -97,7 +99,7 @@ int		ft_gestion(const char *s)
 	return (0);
 }
 
-void	ft_printf(const char *s, ...)
+int		ft_printf(const char *s, ...)
 {
 	va_list ap;
 	int		i;
@@ -117,12 +119,15 @@ void	ft_printf(const char *s, ...)
 			{
 				pourcent++;
 				var.percent = pourcent;
-				ft_traitement(s, &i, &var, ap);
+				if (ft_traitement(s, &i, &var, ap) == 1)
+					return (1);
 			}
 			i++;
 		}
 		va_end(ap);
+		return (0);
 	}
+	return (1);
 }
 
 int		main(void)

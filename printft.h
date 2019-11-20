@@ -6,7 +6,7 @@
 /*   By: aduchemi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/15 11:59:21 by aduchemi          #+#    #+#             */
-/*   Updated: 2019/11/20 18:47:07 by aduchemi         ###   ########.fr       */
+/*   Updated: 2019/11/20 23:47:07 by aduchemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ typedef struct	s_var
 // main_printf
 int				ft_gestion(const char *s);
 int				ft_len_int(int n);
-void			ft_printf(const char *s, ...);
-void			ft_traitement(const char *s, int *i, t_var *var, va_list ap);
+int				ft_printf(const char *s, ...);
+int				ft_traitement(const char *s, int *i, t_var *var, va_list ap);
 
 // flags
 int				ft_dollar(const char *s);
@@ -43,7 +43,7 @@ void			ft_get_arg_dol(int nb, int *flag, va_list ap);
 void			ft_flag_etoile(const char *s, int *i, int *flag, va_list ap);
 
 // conversion
-void			ft_conversion(const char *s, int *i, t_var *var, va_list ap);
+int				ft_conversion(const char *s, int *i, t_var *var, va_list ap);
 void			ft_conv_char(t_var *var, va_list ap);
 int				ft_conv_char_etoile(t_var *var, va_list ap);
 void			ft_conv_nb(t_var *var, va_list aq, char c);

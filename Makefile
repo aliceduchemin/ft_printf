@@ -10,7 +10,7 @@ LIBFT_H		= include/libft.h
 
 LIB			= include/libft.a
 
-NAME		= ft_printf
+NAME		= libftprintf.a
 
 CC			= gcc
 
