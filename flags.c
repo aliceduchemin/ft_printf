@@ -6,13 +6,12 @@
 /*   By: aduchemi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 16:08:46 by aduchemi          #+#    #+#             */
-/*   Updated: 2019/11/20 17:22:01 by aduchemi         ###   ########.fr       */
+/*   Updated: 2019/11/21 15:20:31 by aduchemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
-#include "./include/libft.h"
-#include "printft.h"
+#include "libft.h"
 
 int		ft_dollar(const char *s)
 {

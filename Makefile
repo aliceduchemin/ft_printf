@@ -1,14 +1,8 @@
-SRCS_LIB		= include/ft_isalnum.c include/ft_isdigit.c include/ft_strlen.c include/ft_tolower.c include/ft_isalpha.c include/ft_strchr.c include/ft_strlcpy.c include/ft_strncmp.c include/ft_strrchr.c include/ft_toupper.c include/ft_strlcat.c include/ft_atoi.c include/ft_isascii.c include/ft_memset.c include/ft_isprint.c include/ft_strnstr.c include/ft_bzero.c include/ft_memcpy.c include/ft_memccpy.c include/ft_memchr.c include/ft_memcmp.c include/ft_strdup.c include/ft_calloc.c include/ft_substr.c include/ft_strjoin.c include/ft_split.c include/ft_itoa.c include/ft_putchar_fd.c include/ft_putnbr_fd.c include/ft_putstr_fd.c include/ft_putendl_fd.c include/ft_strmapi.c include/ft_strtrim.c include/ft_memmove.c include/ft_putchar.c include/ft_putstr.c include/ft_putnbr.c
+SRCS		= ft_isalnum.c ft_isdigit.c ft_strlen.c ft_tolower.c ft_isalpha.c ft_strchr.c ft_strlcpy.c ft_strncmp.c ft_strrchr.c ft_toupper.c ft_strlcat.c ft_atoi.c ft_isascii.c ft_memset.c ft_isprint.c ft_strnstr.c ft_bzero.c ft_memcpy.c ft_memccpy.c ft_memchr.c ft_memcmp.c ft_strdup.c ft_calloc.c ft_substr.c ft_strjoin.c ft_split.c ft_itoa.c ft_putchar_fd.c ft_putnbr_fd.c ft_putstr_fd.c ft_putendl_fd.c ft_strmapi.c ft_strtrim.c ft_memmove.c ft_putchar.c ft_putstr.c ft_putnbr.c main_printf.c conversion.c support_conv.c support_conv_nb.c flags.c support_flags.c
 
-SRCS			= main_printf.c conversion.c support_conv.c support_conv_nb.c flags.c support_flags.c
+OBJS		= ${SRCS:.c=.o}
 
-OBJS_LIB		= ${SRCS_LIB:.c=.o}
-
-OBJS			= ${SRCS:.c=.o}
-
-LIBFT_H		= include/libft.h
-
-LIB			= include/libft.a
+FICHIER_H	= libft.h
 
 NAME		= libftprintf.a
 
@@ -16,24 +10,18 @@ CC			= gcc
 
 RM			= rm -f
 
-CFLAGS		= -Wall -Wextra -Werror -I ${LIBFT_H} -o ${NAME}
+CFLAGS		= -Wall -Wextra -Werror -I ${FICHIER_H}
 
-all:		${LIB} ${NAME}
-
-.c.o:		
-			${CC} ${CFLAGS} -c $< -o ${<:.c=.o}
-
-${LIB}:		${OBJS_LIB}
-			ar rc ${LIB} ${OBJS_LIB}
+all:		${NAME}
 
 ${NAME}:	${OBJS}
-			${CC} ${CFLAGS} ${OBJS} ${LIB}
+			ar rc ${NAME} ${OBJS}
 
 clean:
-			${RM} ${OBJS} ${OBJS_LIB}
+			${RM} ${OBJS}
 
 fclean:		clean
-			${RM} ${NAME} ${LIB}
+			${RM} ${NAME}
 
 re:			fclean all
 

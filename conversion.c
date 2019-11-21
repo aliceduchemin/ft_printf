@@ -6,13 +6,12 @@
 /*   By: aduchemi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/15 18:58:53 by aduchemi          #+#    #+#             */
-/*   Updated: 2019/11/20 23:50:28 by aduchemi         ###   ########.fr       */
+/*   Updated: 2019/11/21 18:30:02 by aduchemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
-#include "./include/libft.h"
-#include "printft.h"
+#include "libft.h"
 
 int		ft_conversion(const char *s, int *i, t_var *var, va_list ap)
 {
@@ -28,8 +27,10 @@ int		ft_conversion(const char *s, int *i, t_var *var, va_list ap)
 		if (ft_conv_char_etoile(var, aq) == 0)
 			return (1);
 	}
-	else if (s[*i] == 'i' || s[*i] == 'd' || s[*i] == 'u' || s[*i] == 'x' || s[*i] == 'X' || s[*i] == 'p')
+	else if (s[*i] == 'i' || s[*i] == 'd')
 		ft_conv_nb(var, aq, s[*i]);
+	else if (s[*i] == 'u' || s[*i] == 'x' || s[*i] == 'X' || s[*i] == 'p')
+		ft_conv_unsigned(var, aq, s[*i]);	
 	else if (s[*i] == '%')
 		ft_putchar('%');
 	return (0);
@@ -73,16 +74,38 @@ int		ft_conv_char_etoile(t_var *var, va_list aq)
 	return (1);
 }
 
+void	ft_conv_unsigned(t_var *var, va_list aq, char c)
+{
+	int				len;
+
+	len = ft_hexa(var, aq, c, 0);
+	if (c == 'p')
+		len += 2;
+//	printf("len = %d\n", len);
+	if (!(var->prec == 0 && var->arg == 0))
+	{
+		ft_set_nb(var, len);
+		if (var->arg < 0 && var->att == 0)
+			ft_putchar('-');
+		if (var->att == 0)
+			ft_print_flag(var->larg, '0');
+		else if (var->att == 1)
+			ft_print_flag(var->larg, ' ');
+		if (var->arg < 0 && var->att != 0)
+			ft_putchar('-');
+		ft_print_flag(var->prec, '0');
+		ft_hexa(var, aq, c, -1);
+		if (var->att == -1 && var->larg > 0)
+			ft_print_flag(var->larg, ' ');
+	}
+}
+
 void	ft_conv_nb(t_var *var, va_list aq, char c)
 {
 	int		len;
 
 	ft_dol_nb(var, aq);
-	if (c == 'x' || c == 'X' || c == 'p')
-		len = ft_len_hexa(var->arg);
-	else
-		len = ft_len_int(var->arg);
-//	printf("len = %d\n", len);
+	len = ft_len_int(var->arg);
 	if (!(var->prec == 0 && var->arg == 0))
 	{
 		ft_set_nb(var, len);

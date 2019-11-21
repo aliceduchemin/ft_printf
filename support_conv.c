@@ -6,13 +6,12 @@
 /*   By: aduchemi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 16:14:07 by aduchemi          #+#    #+#             */
-/*   Updated: 2019/11/20 18:24:54 by aduchemi         ###   ########.fr       */
+/*   Updated: 2019/11/21 17:28:09 by aduchemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
-#include "./include/libft.h"
-#include "printft.h"
+#include "libft.h"
 
 void	ft_print_flag(int nb, char c)
 {

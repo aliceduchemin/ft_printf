@@ -6,13 +6,12 @@
 /*   By: aduchemi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 16:14:07 by aduchemi          #+#    #+#             */
-/*   Updated: 2019/11/20 19:34:13 by aduchemi         ###   ########.fr       */
+/*   Updated: 2019/11/21 18:30:05 by aduchemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
-#include "./include/libft.h"
-#include "printft.h"
+#include "libft.h"
 
 void	ft_print_nb(int nb, char c)
 {
@@ -27,33 +26,48 @@ void	ft_print_nb(int nb, char c)
 			nb *= -1;
 		ft_putnbr(nb);
 	}
-	else if (c == 'x' || c == 'p')
-		ft_hexa(nb, "0123456789abcdef");
-	else if (c == 'X')
-		ft_hexa(nb, "0123456789ABCDEF");
 }
 
-int		ft_len_hexa(int nb)
+int		ft_hexa(t_var *var, va_list aq, char c, int ind)
 {
-	int		i;
-
+	unsigned long	nb;
+	int				i;
+	int				len;
+	va_list			aq2;
+	
+	va_copy(aq2, aq);
+	len = 0;
 	i = 0;
-	while (nb)
+	while (i < var->arg - 1)
 	{
+		va_arg(aq2, int);
 		i++;
-		nb = nb / 16;
 	}
-	return (i);
+	nb = va_arg(aq2, unsigned long);
+	if (c == 'x')
+		ft_loop_hexa(nb, "0123456789abcdef", ind, &len);
+	else if (c == 'p')
+	{
+		if (ind == -1)
+			ft_putstr("0x");
+		ft_loop_hexa(nb, "0123456789abcdef", ind, &len);
+	}
+	else if (c == 'X')
+		ft_loop_hexa(nb, "0123456789ABCDEF", ind, &len);
+	return (len);
 }
 
-void	ft_hexa(int nb, char *base)
+void	ft_loop_hexa(unsigned long nb, char *base, int ind, int *len)
 {
 	if (nb > 15)
 	{
-		ft_hexa(nb / 16, base);
+		ft_loop_hexa(nb / 16, base, ind, len);
 		nb = nb % 16;
 	}
-	ft_putchar(base[nb]);
+	if (ind == -1)
+		ft_putchar(base[nb]);
+	else
+		*len = *len + 1;
 }
 
 void	ft_set_nb(t_var *var, int len)

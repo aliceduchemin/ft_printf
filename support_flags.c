@@ -6,13 +6,12 @@
 /*   By: aduchemi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 16:13:28 by aduchemi          #+#    #+#             */
-/*   Updated: 2019/11/20 20:24:30 by aduchemi         ###   ########.fr       */
+/*   Updated: 2019/11/21 18:30:07 by aduchemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
-#include "./include/libft.h"
-#include "printft.h"
+#include "libft.h"
 
 void	ft_compte(const char *s, t_var *var, int *i, int *arg)
 {
@@ -25,14 +24,14 @@ void	ft_compte(const char *s, t_var *var, int *i, int *arg)
 	{
 		while (p < var->percent)
 		{
-			if (s[j] == '%')
+			if (s[j] == '%' && s[j + 1] == '%')
+				j++;
+			else if (s[j] == '%')
 			{
 				if (p > 0)
 					*arg = *arg + 1;
 				p++;
 			}
-			else if (s[j] == '*')
-				*arg = *arg + 1;
 			j++;
 		}
 		if (s[j] == '*')
