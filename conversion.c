@@ -6,13 +6,13 @@
 /*   By: aduchemi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/15 18:58:53 by aduchemi          #+#    #+#             */
-/*   Updated: 2019/11/21 18:30:02 by aduchemi         ###   ########.fr       */
+/*   Updated: 2019/11/26 17:52:22 by aduchemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include "libft.h"
-
+/*
 int		ft_conversion(const char *s, int *i, t_var *var, va_list ap)
 {
 	va_list	aq;
@@ -29,13 +29,13 @@ int		ft_conversion(const char *s, int *i, t_var *var, va_list ap)
 	}
 	else if (s[*i] == 'i' || s[*i] == 'd')
 		ft_conv_nb(var, aq, s[*i]);
-	else if (s[*i] == 'u' || s[*i] == 'x' || s[*i] == 'X' || s[*i] == 'p')
+	else if (s[*i] == 'x' || s[*i] == 'X' || s[*i] == 'p' || s[*i] == 'u')
 		ft_conv_unsigned(var, aq, s[*i]);	
 	else if (s[*i] == '%')
 		ft_putchar('%');
 	return (0);
 }
-
+*/
 void	ft_conv_char(t_var *var, va_list aq)
 {
 	int		j;
@@ -56,11 +56,12 @@ int		ft_conv_char_etoile(t_var *var, va_list aq)
 	char	*str;
 	int		borne;
 
+//	printf("att=%d, larg=%d, prec=%d\n", var->att, var->larg, var->prec);
 	j = 0;
 	while (j++ < var->arg - 1)
 		va_arg(aq, int);
-	if (ft_str_vide(aq) == 0)
-		return (0);
+	if (ft_str_vide(aq, var->prec) == 0)
+		return (1);
 	if (ft_set_char(aq, &str, var, &borne) == 0)
 		return (0);
 	if (var->larg > 0 && var->att == 1)
@@ -78,7 +79,10 @@ void	ft_conv_unsigned(t_var *var, va_list aq, char c)
 {
 	int				len;
 
-	len = ft_hexa(var, aq, c, 0);
+	if (c == 'u')
+		len = ft_u_int(var, aq, 0);
+	else
+		len = ft_hexa(var, aq, c, 0);
 	if (c == 'p')
 		len += 2;
 //	printf("len = %d\n", len);
@@ -94,7 +98,10 @@ void	ft_conv_unsigned(t_var *var, va_list aq, char c)
 		if (var->arg < 0 && var->att != 0)
 			ft_putchar('-');
 		ft_print_flag(var->prec, '0');
-		ft_hexa(var, aq, c, -1);
+		if (c == 'u')
+			ft_u_int(var, aq, -1);
+		else
+			ft_hexa(var, aq, c, -1);
 		if (var->att == -1 && var->larg > 0)
 			ft_print_flag(var->larg, ' ');
 	}

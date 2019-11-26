@@ -6,7 +6,7 @@
 /*   By: aduchemi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 16:14:07 by aduchemi          #+#    #+#             */
-/*   Updated: 2019/11/21 18:30:05 by aduchemi         ###   ########.fr       */
+/*   Updated: 2019/11/26 17:52:26 by aduchemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,40 @@ void	ft_print_nb(int nb, char c)
 			nb *= -1;
 		ft_putnbr(nb);
 	}
+}
+
+int		ft_u_int(t_var *var, va_list aq, int ind)
+{
+	unsigned int	nb;
+	va_list			aq2;
+	int				len;
+	int				i;
+
+	len = 0;
+	va_copy(aq2, aq);
+	i = 0;
+	while (i < var->arg - 1)
+	{
+		va_arg(aq2, int);
+		i++;
+	}
+	nb = va_arg(aq2, unsigned int);
+	if (nb != 0)
+		ft_loop_u(nb, ind, &len);
+	return (len);
+}
+
+void	ft_loop_u(unsigned int nb, int ind, int *len)
+{
+	if (nb > 9)
+	{
+		ft_loop_u(nb / 10, ind, len);
+		nb = nb % 10;
+	}
+	if (ind == -1)
+		ft_putchar(nb + 48);
+	else	
+		*len = *len + 1;
 }
 
 int		ft_hexa(t_var *var, va_list aq, char c, int ind)
