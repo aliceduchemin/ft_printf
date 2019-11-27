@@ -6,7 +6,7 @@
 /*   By: aduchemi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 23:21:53 by aduchemi          #+#    #+#             */
-/*   Updated: 2019/11/26 17:52:31 by aduchemi         ###   ########.fr       */
+/*   Updated: 2019/11/27 19:22:00 by aduchemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ typedef struct	s_var
 
 int				ft_printf(const char *s, ...);
 int				ft_gestion(const char *s);
-int				ft_len_int(int n);
 int				ft_traitement(const char *s, int *i, t_var *var, va_list ap);
 int				ft_dollar(const char *s);
 void			ft_arg(const char *s, int *i, t_var *var);
@@ -37,24 +36,20 @@ void			ft_flag_larg(const char *s, int *i, t_var *var, va_list ap);
 void			ft_flag_prec(const char *s, int *i, t_var *var, va_list ap);
 void			ft_compte(const char *s, t_var *var, int *i, int *arg);
 void			ft_etoile(int *arg, t_var *var, va_list ap);
-void			ft_dol_nb(t_var *var, va_list ap);
 void			ft_get_arg_dol(int nb, int *flag, va_list ap);
 void			ft_flag_etoile(const char *s, int *i, int *flag, va_list ap);
 int				ft_conversion(const char *s, int *i, t_var *var, va_list ap);
+int				ft_cas_particuliers(char c, t_var *var, va_list aq, int *nb);
 void			ft_precision(char c, t_var *var, va_list aq, int *len);
-void			ft_conv_char(t_var *var, va_list ap);
-int				ft_conv_char_etoile(t_var *var, va_list ap);
-void			ft_conv_nb(t_var *var, va_list aq, char c);
-void			ft_conv_unsigned(t_var *var, va_list aq, char c);
-int				ft_u_int(t_var *vr, va_list aq, int ind);
-void			ft_loop_u(unsigned int nb, int ind, int *len);
-int				ft_set_char(va_list aq, char **str, t_var *var, int *borne);
-int				ft_str_vide(va_list aq, int flag);
+void			ft_conditions(t_var *var, int *len, char c);
 void			ft_print_flag(int nb, char c);
-void			ft_print_nb(int nb, char c);
-int				ft_hexa(t_var *var, va_list aq, char c, int ind);
+int				ft_str_vide(va_list aq, int flag);
+int				ft_len_int(int n);
+void			ft_loop_u(unsigned int nb, int ind, int *len);
 void			ft_loop_hexa(unsigned long nb, char *base, int ind, int *len);
-void			ft_set_nb(t_var *var, int len);
+void			ft_print_nb(int nb);
+int				ft_print_char(va_list aq, t_var *var);
+void			ft_print(char c, t_var *var, va_list aq, int nb);
 int				ft_isalnum(int c);
 int				ft_isalpha(int c);
 int				ft_isdigit(int c);

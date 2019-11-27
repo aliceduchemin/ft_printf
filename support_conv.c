@@ -6,12 +6,53 @@
 /*   By: aduchemi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 16:14:07 by aduchemi          #+#    #+#             */
-/*   Updated: 2019/11/26 17:52:28 by aduchemi         ###   ########.fr       */
+/*   Updated: 2019/11/27 19:21:58 by aduchemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include "libft.h"
+
+void	ft_precision(char c, t_var *var, va_list aq, int *len)
+{
+	va_list aq2;
+
+	va_copy(aq2, aq);
+	if (c == 's')
+		*len = ft_strlen(va_arg(aq2, char *));
+	else if (c == 'c')
+		*len = 1;
+	else if (c == 'i' || c == 'd')
+		*len = ft_len_int(va_arg(aq2, int));
+	else if (c == 'u')
+		ft_loop_u(va_arg(aq2, unsigned int), 0, len);
+	else if (c == 'p' || c == 'x' || c == 'X')
+		ft_loop_hexa(va_arg(aq2, unsigned long), "0123456789abcdef", 0, len);
+	else if (c == '%')
+		*len = 1;
+	ft_conditions(var, len, c);
+}
+
+void	ft_conditions(t_var *var, int *len, char c)
+{
+	if (var->att == 0 && var->prec >= 0)
+		var->att = 1;
+	if (var->prec == 0 && c == 's')
+	{
+		var->prec = -1;
+		*len = 1;
+	}
+	else if (var->prec == -2)
+		var->prec = 0;
+	else if (var->prec > 0 && var->prec < *len && c != 's' && c != 'c')
+		var->prec = 0;
+	else if (var->prec > *len && c != 's' && c != 'c')
+		var->prec = var->prec - *len;
+	else if (var->prec > *len && c == 's')
+		var->prec = *len;
+	else if (var->prec < *len && c == 's')
+		*len = 0;
+}
 
 void	ft_print_flag(int nb, char c)
 {
@@ -41,25 +82,5 @@ int		ft_str_vide(va_list aq, int flag)
 		}
 		return (0);
 	}
-	return (1);
-}
-
-int		ft_set_char(va_list aq, char **str, t_var *var, int *borne)
-{
-	va_list	aq2;
-
-	va_copy(aq2, aq);
-	if (var->prec != 0)
-	{
-		*borne = ft_strlen(va_arg(aq2, char *));
-		if (!(*str = malloc(sizeof(char) * (*borne + 1))))
-			return (0);
-		(*str)[*borne] = '\0';
-		*str = va_arg(aq, char *);
-	}
-	if (var->prec == -2 || var->prec > (int)ft_strlen(*str))
-		var->prec = ft_strlen(*str);
-	*borne = var->prec;
-//	var->prec > 0 ? (*borne = var->prec) : (*borne = ft_strlen(*str));
 	return (1);
 }

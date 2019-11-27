@@ -6,7 +6,7 @@
 /*   By: aduchemi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 16:13:28 by aduchemi          #+#    #+#             */
-/*   Updated: 2019/11/26 16:08:15 by aduchemi         ###   ########.fr       */
+/*   Updated: 2019/11/27 18:56:47 by aduchemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,21 +95,6 @@ void	ft_get_arg_dol(int nb, int *flag, va_list ap)
 		i++;
 	}
 	*flag = va_arg(aq, int);
-}
-
-void	ft_dol_nb(t_var *var, va_list ap)
-{
-	va_list	aq;
-	int		i;
-
-	va_copy(aq, ap);
-	i = 0;
-	while (i < var->arg - 1)
-	{
-		va_arg(aq, int);
-		i++;
-	}
-	var->arg = va_arg(aq, int);
 }
 
 void	ft_flag_etoile(const char *s, int *i, int *flag, va_list ap)
