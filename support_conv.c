@@ -6,7 +6,7 @@
 /*   By: aduchemi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 16:14:07 by aduchemi          #+#    #+#             */
-/*   Updated: 2019/11/27 19:21:58 by aduchemi         ###   ########.fr       */
+/*   Updated: 2019/11/27 23:07:08 by aduchemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void	ft_conditions(t_var *var, int *len, char c)
 		var->prec = *len;
 	else if (var->prec < *len && c == 's')
 		*len = 0;
+	//printf("cond larg %d prec %d\n", var->larg, var->prec);
 }
 
 void	ft_print_flag(int nb, char c)

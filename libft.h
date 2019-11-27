@@ -6,7 +6,7 @@
 /*   By: aduchemi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 23:21:53 by aduchemi          #+#    #+#             */
-/*   Updated: 2019/11/27 19:22:00 by aduchemi         ###   ########.fr       */
+/*   Updated: 2019/11/27 22:20:08 by aduchemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ int				ft_conversion(const char *s, int *i, t_var *var, va_list ap);
 int				ft_cas_particuliers(char c, t_var *var, va_list aq, int *nb);
 void			ft_precision(char c, t_var *var, va_list aq, int *len);
 void			ft_conditions(t_var *var, int *len, char c);
+int				ft_cas_zero(t_var *var);
 void			ft_print_flag(int nb, char c);
 int				ft_str_vide(va_list aq, int flag);
 int				ft_len_int(int n);

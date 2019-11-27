@@ -6,7 +6,7 @@
 /*   By: aduchemi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/09 17:04:58 by aduchemi          #+#    #+#             */
-/*   Updated: 2019/11/27 19:15:54 by aduchemi         ###   ########.fr       */
+/*   Updated: 2019/11/27 23:06:25 by aduchemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int		ft_traitement(const char *s, int *i, t_var *var, va_list ap)
 		ft_flag_larg(s, i, var, ap);
 	if (s[*i] == '.')
 		ft_flag_prec(s, i, var, ap);
+//	printf("traitement prec %d\n", var->prec);
 	if (var->arg == 0 || var->larg == -1 || var->prec == -1)
 	{
 		ft_compte(s, var, i, &arg);

@@ -6,7 +6,7 @@
 /*   By: aduchemi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 19:02:47 by aduchemi          #+#    #+#             */
-/*   Updated: 2019/11/27 19:21:56 by aduchemi         ###   ########.fr       */
+/*   Updated: 2019/11/27 23:07:10 by aduchemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,11 @@ void	ft_print(char c, t_var *var, va_list aq, int nb)
 		ft_print_char(aq2, var);
 	else if (c == 'c')
 		ft_putchar(va_arg(aq2, int));
-	else if ((c == 'i' || c == 'd') && !(nb == 0 && var->prec == 0))
-		ft_print_nb(va_arg(aq2, int));
+	else if (c == 'i' || c == 'd') 
+	{
+		if (!(nb == 0 && var->prec == 0))
+			ft_print_nb(va_arg(aq2, int));
+	}
 	else if (c == 'u' && va_arg(aq3, unsigned int) != 0)
 		ft_loop_u(va_arg(aq2, unsigned int), -1, in);
 	else if (c == 'p')
