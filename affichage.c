@@ -6,7 +6,7 @@
 /*   By: aduchemi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 19:02:47 by aduchemi          #+#    #+#             */
-/*   Updated: 2019/11/27 23:07:10 by aduchemi         ###   ########.fr       */
+/*   Updated: 2019/11/28 15:53:58 by aduchemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,19 +43,41 @@ void	ft_print(char c, t_var *var, va_list aq, int nb)
 		if (!(nb == 0 && var->prec == 0))
 			ft_print_nb(va_arg(aq2, int));
 	}
-	else if (c == 'u' && va_arg(aq3, unsigned int) != 0)
-		ft_loop_u(va_arg(aq2, unsigned int), -1, in);
-	else if (c == 'p')
+	else if (c == 'u')
+	{
+		if (va_arg(aq3, unsigned int) == 0)
+			ft_putchar('0');
+		else
+			ft_loop_u(va_arg(aq2, unsigned int), -1, in);
+	}
+	else if (c == '%')
+		ft_putchar('%');
+	else
+		ft_print_hexa(c, var, aq, in);
+}
+
+void	ft_print_hexa(char c, t_var *var, va_list aq, int *in)
+{
+	va_list	aq3;
+	va_list	aq2;
+	(void)var;
+
+	va_copy(aq2, aq);
+	va_copy(aq3, aq);
+	if (c == 'p')
 	{
 		ft_putstr("0x");
 		ft_loop_hexa(va_arg(aq2, unsigned long), "0123456789abcdef", -1, in);
 	}
-	else if (c == 'x')
-		ft_loop_hexa(va_arg(aq2, unsigned long), "0123456789abcdef", -1, in);
-	else if (c == 'X')
-		ft_loop_hexa(va_arg(aq2, unsigned long), "0123456789ABCDEF", -1, in);
-	else if (c == '%')
-		ft_putchar('%');
+	else if (va_arg(aq3, unsigned long) == 0)
+		ft_putchar('0');
+	else
+	{
+		if (c == 'x')
+			ft_loop_hexa(va_arg(aq2, unsigned long), "0123456789abcdef", -1, in);
+		else if (c == 'X')
+			ft_loop_hexa(va_arg(aq2, unsigned long), "0123456789ABCDEF", -1, in);
+	}
 }
 
 int		ft_print_char(va_list aq, t_var *var)

@@ -6,7 +6,7 @@
 /*   By: aduchemi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 23:21:53 by aduchemi          #+#    #+#             */
-/*   Updated: 2019/11/27 22:20:08 by aduchemi         ###   ########.fr       */
+/*   Updated: 2019/11/28 12:57:31 by aduchemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void			ft_loop_hexa(unsigned long nb, char *base, int ind, int *len);
 void			ft_print_nb(int nb);
 int				ft_print_char(va_list aq, t_var *var);
 void			ft_print(char c, t_var *var, va_list aq, int nb);
+void			ft_print_hexa(char c, t_var *var, va_list aq, int *in);
 int				ft_isalnum(int c);
 int				ft_isalpha(int c);
 int				ft_isdigit(int c);
