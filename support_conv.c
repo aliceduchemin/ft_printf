@@ -6,7 +6,7 @@
 /*   By: aduchemi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 16:14:07 by aduchemi          #+#    #+#             */
-/*   Updated: 2019/11/28 15:53:44 by aduchemi         ###   ########.fr       */
+/*   Updated: 2019/11/29 17:37:58 by aduchemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ void	ft_precision(char c, t_var *var, va_list aq, int *len)
 
 void	ft_conditions(t_var *var, int *len, char c)
 {
-//	printf("len=%d prec=%d larg=%d\n", *len, var->prec, var->larg);
 	if (var->att == 0 && var->prec >= 0)
 		var->att = 1;
 	if (var->prec == 0 && c == 's')
@@ -43,28 +42,21 @@ void	ft_conditions(t_var *var, int *len, char c)
 		var->prec = -1;
 		*len = 1;
 	}
-	else if ((c == 's' || c == 'c') && var->prec == -2)
-		var->prec = 0;
-/*	else if (c != 's' && c != 'c' && var->prec == 0 && var->larg > 0)
+	else if (c != 's' && c != 'c' && var->prec == 0)
 	{
-		var->larg += *len;
-		printf("len=%d larg=%d prec=%d\n", *len, var->larg, var->prec);
+		var->prec = -2;
+		*len = *len + 2;
 	}
-*/	else if (c != 's' && c != 'c' && var->prec == -2)
-	{
-//		printf("len=%d larg=%d prec=%d\n", *len, var->larg, var->prec);
-	//	var->prec = *len;
+	else if (var->prec == -2)
 		var->prec = 0;
-	}
+	else if (var->prec > 0 && var->prec >= *len && c != 's' && c != 'c')
+		var->prec -= *len;
 	else if (var->prec > 0 && var->prec < *len && c != 's' && c != 'c')
 		var->prec = 0;
-	else if (var->prec > *len && c != 's' && c != 'c')
-		var->prec = var->prec - *len;
 	else if (var->prec > *len && c == 's')
-		var->prec = *len;
+		var->prec = 0;
 	else if (var->prec < *len && c == 's')
 		*len = 0;
-//	printf("len=%d prec=%d larg=%d\n", *len, var->prec, var->larg);
 }
 
 void	ft_print_flag(int nb, char c)

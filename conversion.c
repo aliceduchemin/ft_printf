@@ -6,7 +6,7 @@
 /*   By: aduchemi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 19:02:47 by aduchemi          #+#    #+#             */
-/*   Updated: 2019/11/28 15:53:48 by aduchemi         ###   ########.fr       */
+/*   Updated: 2019/11/29 17:38:05 by aduchemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ int		ft_conversion(const char *s, int *i, t_var *var, va_list ap)
 	int		len;
 	int		nb;
 	
-//	printf("larg=%d prec=%d\n", var->larg, var->prec);
 	len = 0;
 	nb = 0;
 	j = 0;
@@ -29,9 +28,7 @@ int		ft_conversion(const char *s, int *i, t_var *var, va_list ap)
 		va_arg(aq, int);
 	if (ft_cas_particuliers(s[*i], var, aq, &nb) == 0)
 		return (1);
-//	printf("att=%d len=%d nb=%d larg=%d prec=%d\n", var->att, len, nb, var->larg, var->prec);
 	ft_precision(s[*i], var, aq, &len);
-//	printf("att=%d len=%d nb=%d larg=%d prec=%d\n", var->att, len, nb, var->larg, var->prec);
 	if (var->att == 0)
 	{
 		if ((s[*i] == 'd' || s[*i] == 'i') && nb < 0)
@@ -44,26 +41,11 @@ int		ft_conversion(const char *s, int *i, t_var *var, va_list ap)
 	{
 		if (nb < 0 && var->att != 0)
 			ft_putchar('-');
-		ft_print_flag(var->prec - len, '0');
+		ft_print_flag(var->prec, '0');
 	}
 	ft_print(s[*i], var, aq, nb);
 	if (var->att == -1)
 		ft_print_flag(var->larg - var->prec - len, ' ');
-	return (1);
-}
-
-int		ft_cas_zero(t_var *var)
-{
-//	if (var->prec == 0 && var->larg > 0)
-//		var->larg++;
-	if (var->prec == 0 && var->larg == 0)
-		return (0);
-
-//	else if (var->prec == -2 && var->larg == 0)
-//		ft_putchar('0');
-//	else if (var->prec == -2)
-//		var->prec = 0;
-	//else if (var->prec == -2 && var->larg == 0)
 	return (1);
 }
 
@@ -79,7 +61,7 @@ int		ft_cas_particuliers(char c, t_var *var, va_list aq, int *nb)
 			var->larg--;
 		else if (*nb == 0)
 		{
-			if (ft_cas_zero(var) == 0)
+			if (var->prec == 0 && var->larg == 0)
 				return (0);
 		}
 	}
@@ -87,7 +69,7 @@ int		ft_cas_particuliers(char c, t_var *var, va_list aq, int *nb)
 	{
 		if (va_arg(aq2, unsigned int) == 0)
 		{
-			if (ft_cas_zero(var) == 0)
+			if (var->prec == 0 && var->larg == 0)
 				return (0);
 		}
 	}
@@ -95,7 +77,7 @@ int		ft_cas_particuliers(char c, t_var *var, va_list aq, int *nb)
 	{
 		if (va_arg(aq2, unsigned long) == 0)
 		{
-			if (ft_cas_zero(var) == 0)
+			if (var->prec == 0 && var->larg == 0)
 				return (0);
 		}
 	}

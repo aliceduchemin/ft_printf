@@ -6,7 +6,7 @@
 /*   By: aduchemi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 19:02:47 by aduchemi          #+#    #+#             */
-/*   Updated: 2019/11/28 15:53:58 by aduchemi         ###   ########.fr       */
+/*   Updated: 2019/11/29 17:58:51 by aduchemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,23 @@ void	ft_print(char c, t_var *var, va_list aq, int nb)
 		ft_putchar(va_arg(aq2, int));
 	else if (c == 'i' || c == 'd') 
 	{
-		if (!(nb == 0 && var->prec == 0))
+		if (nb == 0 && var->prec != -2)
+			ft_putchar('0');
+		else if (nb == 0 && var->prec == -2)
+			ft_putchar(' ');
+		else
 			ft_print_nb(va_arg(aq2, int));
 	}
 	else if (c == 'u')
 	{
 		if (va_arg(aq3, unsigned int) == 0)
-			ft_putchar('0');
-		else
+		{
+			if (var->prec != -2)
+				ft_putchar('0');
+			else
+				ft_putchar(' ');
+		}
+		else if (var->prec != -2)
 			ft_loop_u(va_arg(aq2, unsigned int), -1, in);
 	}
 	else if (c == '%')
@@ -61,7 +70,7 @@ void	ft_print_hexa(char c, t_var *var, va_list aq, int *in)
 	va_list	aq3;
 	va_list	aq2;
 	(void)var;
-
+//	printf("larg=%d, prec=%d\n", var->larg, var->prec);
 	va_copy(aq2, aq);
 	va_copy(aq3, aq);
 	if (c == 'p')
@@ -70,7 +79,12 @@ void	ft_print_hexa(char c, t_var *var, va_list aq, int *in)
 		ft_loop_hexa(va_arg(aq2, unsigned long), "0123456789abcdef", -1, in);
 	}
 	else if (va_arg(aq3, unsigned long) == 0)
-		ft_putchar('0');
+	{
+		if (var->prec != -2)
+			ft_putchar('0');
+		else
+			ft_putchar(' ');
+	}
 	else
 	{
 		if (c == 'x')
