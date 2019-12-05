@@ -6,17 +6,19 @@
 /*   By: aduchemi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 16:14:07 by aduchemi          #+#    #+#             */
-/*   Updated: 2019/11/29 17:37:58 by aduchemi         ###   ########.fr       */
+/*   Updated: 2019/12/05 14:39:37 by aduchemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include "libft.h"
 
-void	ft_precision(char c, t_var *var, va_list aq, int *len)
+int		ft_precision(char c, t_var *var, va_list aq, int *len)
 {
 	va_list aq2;
+	int		ret;
 
+	ret = 0;
 	va_copy(aq2, aq);
 	if (c == 's')
 		*len = ft_strlen(va_arg(aq2, char *));
@@ -30,10 +32,12 @@ void	ft_precision(char c, t_var *var, va_list aq, int *len)
 		ft_loop_hexa(va_arg(aq2, unsigned long), "0123456789abcdef", 0, len);
 	else if (c == '%')
 		*len = 1;
-	ft_conditions(var, len, c);
+	ret = *len;
+	ft_conditions(var, len, c, &ret);
+	return (ret);
 }
 
-void	ft_conditions(t_var *var, int *len, char c)
+void	ft_conditions(t_var *var, int *len, char c, int *ret)
 {
 	if (var->att == 0 && var->prec >= 0)
 		var->att = 1;
@@ -41,6 +45,7 @@ void	ft_conditions(t_var *var, int *len, char c)
 	{
 		var->prec = -1;
 		*len = 1;
+		*ret = 0;
 	}
 	else if (c != 's' && c != 'c' && var->prec == 0)
 	{
@@ -56,16 +61,25 @@ void	ft_conditions(t_var *var, int *len, char c)
 	else if (var->prec > *len && c == 's')
 		var->prec = 0;
 	else if (var->prec < *len && c == 's')
+	{
 		*len = 0;
+		*ret = var->prec;
+	}
 }
 
-void	ft_print_flag(int nb, char c)
+int		ft_print_flag(int nb, char c)
 {
 	int		j;
+	int		ret;
 
 	j = 0;
+	ret = 0;
 	while (j++ < nb)
+	{
 		ft_putchar(c);
+		ret++;
+	}
+	return (ret);
 }
 
 int		ft_str_vide(va_list aq, int flag)
@@ -85,7 +99,7 @@ int		ft_str_vide(va_list aq, int flag)
 			ft_putchar(s[i]);
 			i++;
 		}
-		return (0);
+		return (i);
 	}
-	return (1);
+	return (0);
 }
