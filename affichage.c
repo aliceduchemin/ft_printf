@@ -6,24 +6,12 @@
 /*   By: aduchemi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 19:02:47 by aduchemi          #+#    #+#             */
-/*   Updated: 2019/12/09 17:12:44 by aduchemi         ###   ########.fr       */
+/*   Updated: 2019/12/09 18:19:14 by aduchemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include "libft.h"
-
-void	ft_print_nb(int nb)
-{
-	if (nb == -2147483648)
-	{
-		ft_putchar('2');
-		nb = 147483648;
-	}
-	if (nb < 0)
-		nb *= -1;
-	ft_putnbr(nb);
-}
 
 int		ft_print(char c, t_var *var, va_list aq, int nb)
 {
@@ -38,7 +26,6 @@ int		ft_print(char c, t_var *var, va_list aq, int nb)
 	in = 0;
 	if (c == 's')
 	{
-	//	printf("arg=%d larg=%d prec=%d\n", var->n_arg, var->larg, var->prec);
 		if ((ret = ft_str_vide(aq2, var->prec, 1)) != 0)
 			return (0);
 		else if (ft_print_char(aq2, var, &ret) == -1)
@@ -102,7 +89,6 @@ int		ft_print_hexa(char c, t_var *var, va_list aq, int *in)
 			ft_loop_hexa(va_arg(aq2, unsigned long), "0123456789abcdef", -1, in);
 		else if (c == 'X')
 		{
-		//	printf("va=%lX\n", va_arg(aq2, unsigned long));
 			ft_loop_hexa(va_arg(aq2, unsigned long), "0123456789ABCDEF", -1, in);
 		}
 	}

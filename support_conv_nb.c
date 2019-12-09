@@ -6,12 +6,24 @@
 /*   By: aduchemi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 18:54:48 by aduchemi          #+#    #+#             */
-/*   Updated: 2019/12/09 16:38:59 by aduchemi         ###   ########.fr       */
+/*   Updated: 2019/12/09 18:19:09 by aduchemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include "libft.h"
+
+void	ft_print_nb(int nb)
+{
+	if (nb == -2147483648)
+	{
+		ft_putchar('2');
+		nb = 147483648;
+	}
+	if (nb < 0)
+		nb *= -1;
+	ft_putnbr(nb);
+}
 
 int		ft_len_int(int n)
 {

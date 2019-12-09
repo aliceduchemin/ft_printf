@@ -6,7 +6,7 @@
 /*   By: aduchemi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 23:21:53 by aduchemi          #+#    #+#             */
-/*   Updated: 2019/12/09 15:13:05 by aduchemi         ###   ########.fr       */
+/*   Updated: 2019/12/09 19:36:25 by aduchemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,8 @@
 
 typedef struct	s_var
 {
-	int			percent;
 	int			n_arg;
 	int			deb;
-	int			arg;
 	int			att;
 	int			larg;
 	int			prec;
@@ -30,22 +28,23 @@ typedef struct	s_var
 
 int				ft_printf(const char *s, ...);
 int				ft_gestion(const char *s);
+int				ft_boucle(const char *s, t_var *var, va_list ap, int *ret_fin);
+void			ft_print_invar(char c, int *ret_fin, int *i);
 int				ft_traitement(const char *s, int *i, t_var *var, va_list ap);
-int				ft_dollar(const char *s);
-void			ft_arg(const char *s, int *i, t_var *var);
 void			ft_attributs(const char *s, int *i, t_var *var);
 void			ft_flag_larg(const char *s, int *i, t_var *var, va_list ap);
-void			ft_flag_prec(const char *s, int *i, t_var *var, va_list ap);
-//void			ft_compte(const char *s, t_var *var, int *i, int *arg);
+void			ft_flag_prec(const char *s, int *i, t_var *var);
 void			ft_compte(const char *s, t_var *var, int *i);
-//void			ft_etoile(t_var *var, va_list ap, int *arg);
 void			ft_etoile(t_var *var, va_list ap);
-void			ft_get_arg_dol(int nb, int *flag, va_list ap);
-void			ft_flag_etoile(const char *s, int *i, int *flag, va_list ap);
+void			ft_suite_etoile(t_var *var, va_list ap);
 int				ft_conversion(const char *s, int *i, t_var *var, va_list ap);
+int				ft_suite_conv(char c, t_var *var, va_list aq, int nb);
 int				ft_cas_particuliers(char c, t_var *var, va_list aq, int *nb);
+int				ft_cas_part2(char c, t_var *var, va_list aq);
 int				ft_precision(char c, t_var *var, va_list aq, int *len);
+int				ft_suite_precision(char c, va_list aq, int *len);
 void			ft_conditions(t_var *var, int *len, char c, int *ret);
+int				ft_print_att(t_var *var, int *nb, char c, int *len);
 int				ft_print_flag(int nb, char c);
 int				ft_str_vide(va_list aq, int flag, int indice);
 int				ft_len_int(int n);
