@@ -6,7 +6,7 @@
 /*   By: aduchemi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 19:02:47 by aduchemi          #+#    #+#             */
-/*   Updated: 2019/12/05 14:34:52 by aduchemi         ###   ########.fr       */
+/*   Updated: 2019/12/09 18:09:06 by aduchemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ int		ft_conversion(const char *s, int *i, t_var *var, va_list ap)
 int		ft_cas_particuliers(char c, t_var *var, va_list aq, int *nb)
 {
 	va_list	aq2;
-	int		ret;
 
 	va_copy(aq2, aq);
 	if (c == 'd' || c == 'i')
@@ -95,11 +94,11 @@ int		ft_cas_particuliers(char c, t_var *var, va_list aq, int *nb)
 		}
 	}
 	if (c == 'p')
-		var->larg -= 2;
+		var->larg -= 2;/*
 	else if (c == 's')
 	{
 		if ((ret = ft_str_vide(aq2, var->prec)) != 0)
 			return (ret);
-	}
+	}*/
 	return (1);
 }

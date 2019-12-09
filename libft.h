@@ -6,7 +6,7 @@
 /*   By: aduchemi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 23:21:53 by aduchemi          #+#    #+#             */
-/*   Updated: 2019/12/05 14:38:55 by aduchemi         ###   ########.fr       */
+/*   Updated: 2019/12/09 15:13:05 by aduchemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 typedef struct	s_var
 {
 	int			percent;
+	int			n_arg;
+	int			deb;
 	int			arg;
 	int			att;
 	int			larg;
@@ -34,8 +36,10 @@ void			ft_arg(const char *s, int *i, t_var *var);
 void			ft_attributs(const char *s, int *i, t_var *var);
 void			ft_flag_larg(const char *s, int *i, t_var *var, va_list ap);
 void			ft_flag_prec(const char *s, int *i, t_var *var, va_list ap);
-void			ft_compte(const char *s, t_var *var, int *i, int *arg);
-void			ft_etoile(int *arg, t_var *var, va_list ap);
+//void			ft_compte(const char *s, t_var *var, int *i, int *arg);
+void			ft_compte(const char *s, t_var *var, int *i);
+//void			ft_etoile(t_var *var, va_list ap, int *arg);
+void			ft_etoile(t_var *var, va_list ap);
 void			ft_get_arg_dol(int nb, int *flag, va_list ap);
 void			ft_flag_etoile(const char *s, int *i, int *flag, va_list ap);
 int				ft_conversion(const char *s, int *i, t_var *var, va_list ap);
@@ -43,12 +47,12 @@ int				ft_cas_particuliers(char c, t_var *var, va_list aq, int *nb);
 int				ft_precision(char c, t_var *var, va_list aq, int *len);
 void			ft_conditions(t_var *var, int *len, char c, int *ret);
 int				ft_print_flag(int nb, char c);
-int				ft_str_vide(va_list aq, int flag);
+int				ft_str_vide(va_list aq, int flag, int indice);
 int				ft_len_int(int n);
 void			ft_loop_u(unsigned int nb, int ind, int *len);
 void			ft_loop_hexa(unsigned long nb, char *base, int ind, int *len);
 void			ft_print_nb(int nb);
-int				ft_print_char(va_list aq, t_var *var);
+int				ft_print_char(va_list aq, t_var *var, int *ret);
 int				ft_print(char c, t_var *var, va_list aq, int nb);
 int				ft_print_hexa(char c, t_var *var, va_list aq, int *in);
 

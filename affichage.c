@@ -6,7 +6,7 @@
 /*   By: aduchemi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 19:02:47 by aduchemi          #+#    #+#             */
-/*   Updated: 2019/12/05 14:39:22 by aduchemi         ###   ########.fr       */
+/*   Updated: 2019/12/09 17:12:44 by aduchemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,10 @@ int		ft_print(char c, t_var *var, va_list aq, int nb)
 	in = 0;
 	if (c == 's')
 	{
-		if (ft_print_char(aq2, var) == -1)
+	//	printf("arg=%d larg=%d prec=%d\n", var->n_arg, var->larg, var->prec);
+		if ((ret = ft_str_vide(aq2, var->prec, 1)) != 0)
+			return (0);
+		else if (ft_print_char(aq2, var, &ret) == -1)
 			return (-1);
 	}
 	else if (c == 'c')
@@ -98,12 +101,15 @@ int		ft_print_hexa(char c, t_var *var, va_list aq, int *in)
 		if (c == 'x')
 			ft_loop_hexa(va_arg(aq2, unsigned long), "0123456789abcdef", -1, in);
 		else if (c == 'X')
+		{
+		//	printf("va=%lX\n", va_arg(aq2, unsigned long));
 			ft_loop_hexa(va_arg(aq2, unsigned long), "0123456789ABCDEF", -1, in);
+		}
 	}
 	return (ret);
 }
 
-int		ft_print_char(va_list aq, t_var *var)
+int		ft_print_char(va_list aq, t_var *var, int *ret)
 {
 	va_list	aq2;
 	va_list	aq3;
@@ -128,6 +134,10 @@ int		ft_print_char(va_list aq, t_var *var)
 			ft_putchar(str[j++]);
 	}
 	else if (var->prec == 0)
-		ft_putstr(str);
+	{
+		while (str[j])
+			ft_putchar(str[j++]);
+	}
+	*ret = j;
 	return (0);
 }

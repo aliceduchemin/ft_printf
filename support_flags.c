@@ -6,41 +6,30 @@
 /*   By: aduchemi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 16:13:28 by aduchemi          #+#    #+#             */
-/*   Updated: 2019/11/27 18:56:47 by aduchemi         ###   ########.fr       */
+/*   Updated: 2019/12/09 17:12:37 by aduchemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include "libft.h"
 
-void	ft_compte(const char *s, t_var *var, int *i, int *arg)
+void	ft_compte(const char *s, t_var *var, int *i)
 {
 	int		j;
-	int		p;
 
-	j = 0;
-	p = 0;
-	while (j < *i)
+	j = var->deb;
+//	printf("\nj=%d arg=%d i=%d deb=%d\n", j, var->n_arg, *i, var->deb);
+	while (j <= *i)
 	{
-		while (p < var->percent)
-		{
-			if (s[j] == '%' && s[j + 1] == '%')
-				j++;
-			else if (s[j] == '%')
-			{
-				if (p > 0)
-					*arg = *arg + 1;
-				p++;
-			}
+		if (s[j] == '%' && s[j + 1] == '%')
 			j++;
-		}
-		if (s[j] == '*')
-			*arg = *arg + 1;
+		else if (s[j] == '%' || s[j] == '*')
+			var->n_arg++;
 		j++;
 	}
 }
 
-void	ft_etoile(int *arg, t_var *var, va_list ap)
+void	ft_etoile(t_var *var, va_list ap)
 {
 	va_list	aq;
 	int		n;
@@ -48,10 +37,10 @@ void	ft_etoile(int *arg, t_var *var, va_list ap)
 
 	tmp = 0;
 	va_copy(aq, ap);
-	n = 0;
+	n = 1;
 	if (var->larg == -1 && var->prec == -1)
 	{
-		while (n < (*arg - 2))
+		while (n < (var->n_arg - 2))
 		{
 			va_arg(aq, int);
 			n++;
@@ -66,7 +55,7 @@ void	ft_etoile(int *arg, t_var *var, va_list ap)
 	}
 	else if ((var->larg == -1 && var->prec != -1) || (var->larg != -1 && var->prec == -1))
 	{
-		while (n < (*arg - 1))
+		while (n < (var->n_arg - 1))
 		{
 			va_arg(aq, int);
 			n++;
@@ -81,7 +70,7 @@ void	ft_etoile(int *arg, t_var *var, va_list ap)
 			var->larg = tmp;
 	}
 }
-
+/*
 void	ft_get_arg_dol(int nb, int *flag, va_list ap)
 {
 	va_list	aq;
@@ -111,4 +100,4 @@ void	ft_flag_etoile(const char *s, int *i, int *flag, va_list ap)
 		ft_get_arg_dol(nb, flag, ap);
 		*i = *i + ft_len_int(nb) + 1;
 	}
-}
+}*/
