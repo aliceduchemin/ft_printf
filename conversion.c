@@ -6,7 +6,7 @@
 /*   By: aduchemi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 19:02:47 by aduchemi          #+#    #+#             */
-/*   Updated: 2019/12/09 19:36:21 by aduchemi         ###   ########.fr       */
+/*   Updated: 2019/12/10 18:23:43 by aduchemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ int		ft_print_att(t_var *var, int *nb, char c, int *len)
 	ret = 0;
 	if (var->att == 0)
 	{
-		if ((c == 'd' || c == 'i') && nb < 0)
+		if ((c == 'd' || c == 'i') && *nb < 0)
 		{
 			ft_putchar('-');
 			ret++;

@@ -6,7 +6,7 @@
 /*   By: aduchemi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 16:14:07 by aduchemi          #+#    #+#             */
-/*   Updated: 2019/12/09 19:36:19 by aduchemi         ###   ########.fr       */
+/*   Updated: 2019/12/10 18:48:49 by aduchemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,17 @@ int		ft_precision(char c, t_var *var, va_list aq, int *len)
 	va_copy(aq2, aq);
 	if (c == 's')
 	{
-		if ((ret = ft_str_vide(aq2, var->prec, 0)) != 0)
+		if ((ret = ft_str_vide(aq2, var->prec, 0)) != -1)
 		{
 			var->prec = ret;
 			*len = 0;
 			return (ret);
 		}
 		else
+		{
+			ret++;
 			*len = ft_strlen(va_arg(aq2, char *));
+		}
 	}
 	else
 		ret = ft_suite_precision(c, aq, len);
@@ -85,32 +88,17 @@ void	ft_conditions(t_var *var, int *len, char c, int *ret)
 		*len = 0;
 }
 
-int		ft_print_flag(int nb, char c)
-{
-	int		j;
-	int		ret;
-
-	j = 0;
-	ret = 0;
-	while (j++ < nb)
-	{
-		ft_putchar(c);
-		ret++;
-	}
-	return (ret);
-}
-
 int		ft_str_vide(va_list aq, int flag, int indice)
 {
 	va_list	aq2;
 	int		i;
 	char	s[6];
 
+	va_copy(aq2, aq);
 	ft_strlcpy(s, "(null)", 7);
 	if (flag == -2)
 		flag = 6;
-	va_copy(aq2, aq);
-	if (va_arg(aq2, char *) == 0)
+	if (va_arg(aq2, char *) == NULL)
 	{
 		i = 0;
 		while (i < flag)
@@ -121,5 +109,31 @@ int		ft_str_vide(va_list aq, int flag, int indice)
 		}
 		return (i);
 	}
+	return (-1);
+}
+
+int		ft_print_char(va_list aq, t_var *var, int *ret)
+{
+	va_list aq2;
+	char	*str;
+	int		j;
+
+	va_copy(aq2, aq);
+	j = 0;
+	if (var->prec != -1)
+	{
+		str = va_arg(aq2, char *);
+		if (var->prec != 0)
+		{
+			while (j < var->prec)
+				ft_putchar(str[j++]);
+		}
+		else
+		{
+			while (str[j])
+				ft_putchar(str[j++]);
+		}
+	}
+	*ret = j;
 	return (0);
 }

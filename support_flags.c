@@ -6,7 +6,7 @@
 /*   By: aduchemi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 16:13:28 by aduchemi          #+#    #+#             */
-/*   Updated: 2019/12/09 19:36:17 by aduchemi         ###   ########.fr       */
+/*   Updated: 2019/12/10 18:46:41 by aduchemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,4 +74,19 @@ void	ft_suite_etoile(t_var *var, va_list ap)
 	}
 	else
 		var->larg = tmp;
+}
+
+int		ft_print_flag(int nb, char c)
+{
+	int		j;
+	int		ret;
+
+	j = 0;
+	ret = 0;
+	while (j++ < nb)
+	{
+		ft_putchar(c);
+		ret++;
+	}
+	return (ret);
 }

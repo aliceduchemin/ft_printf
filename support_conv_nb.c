@@ -6,7 +6,7 @@
 /*   By: aduchemi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 18:54:48 by aduchemi          #+#    #+#             */
-/*   Updated: 2019/12/09 18:19:09 by aduchemi         ###   ########.fr       */
+/*   Updated: 2019/12/10 18:29:35 by aduchemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	ft_loop_u(unsigned int nb, int ind, int *len)
 	}
 	if (ind == -1)
 		ft_putchar(nb + 48);
-	else	
+	else
 		*len = *len + 1;
 }
 

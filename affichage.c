@@ -6,7 +6,7 @@
 /*   By: aduchemi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 19:02:47 by aduchemi          #+#    #+#             */
-/*   Updated: 2019/12/09 18:19:14 by aduchemi         ###   ########.fr       */
+/*   Updated: 2019/12/10 19:19:15 by aduchemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,25 +15,33 @@
 
 int		ft_print(char c, t_var *var, va_list aq, int nb)
 {
-	int				*in;
 	va_list			aq2;
-	va_list			aq3;
 	int				ret;
 
 	va_copy(aq2, aq);
-	va_copy(aq3, aq);
 	ret = 0;
-	in = 0;
 	if (c == 's')
 	{
-		if ((ret = ft_str_vide(aq2, var->prec, 1)) != 0)
+		if (ft_str_vide(aq2, var->prec, 1) != -1)
 			return (0);
 		else if (ft_print_char(aq2, var, &ret) == -1)
 			return (-1);
 	}
 	else if (c == 'c')
 		ft_putchar(va_arg(aq2, int));
-	else if (c == 'i' || c == 'd') 
+	else
+		ret = ft_suite_print(c, var, aq, nb);
+	return (ret);
+}
+
+int		ft_suite_print(char c, t_var *var, va_list aq, int nb)
+{
+	va_list	aq2;
+	int		ret;
+
+	va_copy(aq2, aq);
+	ret = 0;
+	if (c == 'i' || c == 'd')
 	{
 		if (nb == 0 && var->prec != -2)
 			ft_putchar('0');
@@ -42,9 +50,25 @@ int		ft_print(char c, t_var *var, va_list aq, int nb)
 		else
 			ft_print_nb(va_arg(aq2, int));
 	}
-	else if (c == 'u')
+	else if (c == '%')
+		ft_putchar('%');
+	else
+		ft_suite2_print(c, var, aq, &ret);
+	return (ret);
+}
+
+void	ft_suite2_print(char c, t_var *var, va_list aq, int *ret)
+{
+	va_list	aq2;
+	va_list	aq3;
+	int		*in;
+
+	va_copy(aq2, aq);
+	va_copy(aq3, aq);
+	in = 0;
+	if (c == 'u')
 	{
-		if (va_arg(aq3, unsigned int) == 0)
+		if (va_arg(aq2, unsigned int) == 0)
 		{
 			if (var->prec != -2)
 				ft_putchar('0');
@@ -52,31 +76,24 @@ int		ft_print(char c, t_var *var, va_list aq, int nb)
 				ft_putchar(' ');
 		}
 		else
-			ft_loop_u(va_arg(aq2, unsigned int), -1, in);
+			ft_loop_u(va_arg(aq3, unsigned int), -1, in);
 	}
-	else if (c == '%')
-		ft_putchar('%');
 	else
-		ret = ft_print_hexa(c, var, aq, in);
-	return (ret);
+		*ret = ft_print_hexa(c, var, aq, in);
 }
 
 int		ft_print_hexa(char c, t_var *var, va_list aq, int *in)
 {
-	va_list	aq3;
 	va_list	aq2;
-	int		ret;
-	
-	ret = 0;
+
 	va_copy(aq2, aq);
-	va_copy(aq3, aq);
 	if (c == 'p')
 	{
 		ft_putstr("0x");
-		ret = 2;
 		ft_loop_hexa(va_arg(aq2, unsigned long), "0123456789abcdef", -1, in);
+		return (2);
 	}
-	else if (va_arg(aq3, unsigned long) == 0)
+	else if (va_arg(aq2, unsigned long) == 0)
 	{
 		if (var->prec != -2)
 			ft_putchar('0');
@@ -84,46 +101,17 @@ int		ft_print_hexa(char c, t_var *var, va_list aq, int *in)
 			ft_putchar(' ');
 	}
 	else
-	{
-		if (c == 'x')
-			ft_loop_hexa(va_arg(aq2, unsigned long), "0123456789abcdef", -1, in);
-		else if (c == 'X')
-		{
-			ft_loop_hexa(va_arg(aq2, unsigned long), "0123456789ABCDEF", -1, in);
-		}
-	}
-	return (ret);
+		ft_suite_hexa(c, aq, in);
+	return (0);
 }
 
-int		ft_print_char(va_list aq, t_var *var, int *ret)
+void	ft_suite_hexa(char c, va_list aq, int *in)
 {
 	va_list	aq2;
-	va_list	aq3;
-	char	*str;
-	int		j;
-	int		borne;
 
 	va_copy(aq2, aq);
-	va_copy(aq3, aq);
-	if (var->prec != -1)
-	{
-		borne = ft_strlen(va_arg(aq3, char *));
-		if (!(str = malloc(sizeof(char) * (borne + 1))))
-			return (-1);
-		str[borne] = '\0';
-		str = va_arg(aq2, char *);
-	}
-	j = 0;
-	if (var->prec != -1 && var->prec != 0)
-	{
-		while (j < var->prec)
-			ft_putchar(str[j++]);
-	}
-	else if (var->prec == 0)
-	{
-		while (str[j])
-			ft_putchar(str[j++]);
-	}
-	*ret = j;
-	return (0);
+	if (c == 'x')
+		ft_loop_hexa(va_arg(aq2, unsigned long), "0123456789abcdef", -1, in);
+	else if (c == 'X')
+		ft_loop_hexa(va_arg(aq2, unsigned long), "0123456789ABCDEF", -1, in);
 }
