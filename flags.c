@@ -6,11 +6,10 @@
 /*   By: aduchemi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 16:08:46 by aduchemi          #+#    #+#             */
-/*   Updated: 2019/12/10 18:54:09 by aduchemi         ###   ########.fr       */
+/*   Updated: 2019/12/13 16:59:31 by aduchemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include "libft.h"
 
 void	ft_attributs(const char *s, int *i, t_var *var)
@@ -25,17 +24,12 @@ void	ft_attributs(const char *s, int *i, t_var *var)
 	}
 }
 
-void	ft_flag_larg(const char *s, int *i, t_var *var, va_list ap)
+void	ft_flag_larg(const char *s, int *i, t_var *var)
 {
-	int		nb;
-
-	(void)ap;
-	nb = 0;
 	if (ft_isdigit(s[*i]))
 	{
-		nb = ft_atoi(ft_substr(s, *i, ft_strlen(s)));
-		*i = *i + ft_len_int(nb);
-		var->larg = nb;
+		var->larg = ft_atoi(ft_substr(s, *i, ft_strlen(s)));
+		*i = *i + ft_len_int(var->larg);
 	}
 	else if (s[*i] == '*')
 	{
@@ -46,19 +40,11 @@ void	ft_flag_larg(const char *s, int *i, t_var *var, va_list ap)
 
 void	ft_flag_prec(const char *s, int *i, t_var *var)
 {
-	int		nb;
-
 	*i = *i + 1;
-	if (s[*i] == '0')
+	if (ft_isdigit(s[*i]))
 	{
-		var->prec = 0;
-		*i = *i + 1;
-	}
-	else if (ft_isdigit(s[*i]))
-	{
-		nb = ft_atoi(ft_substr(s, *i, ft_strlen(s)));
-		var->prec = nb;
-		*i = *i + ft_len_int(nb);
+		var->prec = ft_atoi(ft_substr(s, *i, ft_strlen(s)));
+		*i = *i + ft_len_int(var->prec);
 	}
 	else if (s[*i] == '*')
 	{

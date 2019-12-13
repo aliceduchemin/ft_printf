@@ -6,7 +6,7 @@
 /*   By: aduchemi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/09 17:04:58 by aduchemi          #+#    #+#             */
-/*   Updated: 2019/12/10 18:28:45 by aduchemi         ###   ########.fr       */
+/*   Updated: 2019/12/13 17:46:25 by aduchemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int		ft_traitement(const char *s, int *i, t_var *var, va_list ap)
 	*i = *i + 1;
 	ft_attributs(s, i, var);
 	if (s[*i] != '.')
-		ft_flag_larg(s, i, var, ap);
+		ft_flag_larg(s, i, var);
 	if (s[*i] == '.')
 		ft_flag_prec(s, i, var);
 	ft_compte(s, var, i);
@@ -32,26 +32,6 @@ int		ft_traitement(const char *s, int *i, t_var *var, va_list ap)
 	if ((ret = ft_conversion(s, i, var, ap)) == -1)
 		return (-1);
 	return (ret);
-}
-
-int		ft_gestion(const char *s)
-{
-	int		i;
-
-	i = 0;
-	while (s[i] && s[i] != '%')
-		i++;
-	while (s[i])
-	{
-		if (s[i] == '*')
-		{
-			i++;
-			if (ft_isdigit(s[i]))
-				return (1);
-		}
-		i++;
-	}
-	return (0);
 }
 
 int		ft_printf(const char *s, ...)
@@ -62,8 +42,6 @@ int		ft_printf(const char *s, ...)
 
 	ret_fin = 0;
 	var.n_arg = 0;
-	if (ft_gestion(s) != 0)
-		return (-1);
 	va_start(ap, s);
 	if (ft_boucle(s, &var, ap, &ret_fin) == -1)
 		return (-1);

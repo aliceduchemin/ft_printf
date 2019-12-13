@@ -6,7 +6,7 @@
 /*   By: aduchemi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 23:21:53 by aduchemi          #+#    #+#             */
-/*   Updated: 2019/12/10 19:19:45 by aduchemi         ###   ########.fr       */
+/*   Updated: 2019/12/13 16:53:03 by aduchemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,11 @@ typedef struct	s_var
 }				t_var;
 
 int				ft_printf(const char *s, ...);
-int				ft_gestion(const char *s);
 int				ft_boucle(const char *s, t_var *var, va_list ap, int *ret_fin);
 void			ft_print_invar(char c, int *ret_fin, int *i);
 int				ft_traitement(const char *s, int *i, t_var *var, va_list ap);
 void			ft_attributs(const char *s, int *i, t_var *var);
-void			ft_flag_larg(const char *s, int *i, t_var *var, va_list ap);
+void			ft_flag_larg(const char *s, int *i, t_var *var);
 void			ft_flag_prec(const char *s, int *i, t_var *var);
 void			ft_compte(const char *s, t_var *var, int *i);
 void			ft_etoile(t_var *var, va_list ap);

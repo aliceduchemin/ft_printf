@@ -6,11 +6,10 @@
 /*   By: aduchemi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 16:13:28 by aduchemi          #+#    #+#             */
-/*   Updated: 2019/12/10 18:46:41 by aduchemi         ###   ########.fr       */
+/*   Updated: 2019/12/13 17:46:22 by aduchemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include "libft.h"
 
 void	ft_compte(const char *s, t_var *var, int *i)
@@ -64,16 +63,18 @@ void	ft_suite_etoile(t_var *var, va_list ap)
 	while (n++ < (var->n_arg - 1))
 		va_arg(aq, int);
 	if (var->larg == -1)
-		tmp = va_arg(aq, int);
-	else
-		var->prec = va_arg(aq, int);
-	if (tmp < 0)
 	{
-		var->larg = tmp * -1;
-		var->att = -1;
+		tmp = va_arg(aq, int);
+		if (tmp < 0)
+		{
+			var->larg = tmp * -1;
+			var->att = -1;
+		}
+		else
+			var->larg = tmp;
 	}
 	else
-		var->larg = tmp;
+		var->prec = va_arg(aq, int);
 }
 
 int		ft_print_flag(int nb, char c)

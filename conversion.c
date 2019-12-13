@@ -6,11 +6,10 @@
 /*   By: aduchemi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 19:02:47 by aduchemi          #+#    #+#             */
-/*   Updated: 2019/12/10 18:23:43 by aduchemi         ###   ########.fr       */
+/*   Updated: 2019/12/13 17:46:20 by aduchemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include "libft.h"
 
 int		ft_conversion(const char *s, int *i, t_var *var, va_list ap)
@@ -35,6 +34,29 @@ int		ft_conversion(const char *s, int *i, t_var *var, va_list ap)
 	ret += ft_suite_conv(s[*i], var, aq, nb);
 	if (var->att == -1)
 		ret += ft_print_flag(var->larg - var->prec - len, ' ');
+	return (ret);
+}
+
+int		ft_suite_conv(char c, t_var *var, va_list aq, int nb)
+{
+	va_list	aq2;
+	int		ret;
+	int		ret2;
+
+	va_copy(aq2, aq);
+	ret = 0;
+	if (c == 'd' || c == 'i' || c == 'x' || c == 'X' || c == 'u')
+	{
+		if (nb < 0 && var->att != 0)
+		{
+			ft_putchar('-');
+			ret++;
+		}
+		ret += ft_print_flag(var->prec, '0');
+	}
+	if ((ret2 = ft_print(c, var, aq, nb)) == -1)
+		return (-1);
+	ret += ret2;
 	return (ret);
 }
 
@@ -104,28 +126,5 @@ int		ft_print_att(t_var *var, int *nb, char c, int *len)
 	}
 	else if (var->att == 1)
 		ret += ft_print_flag(var->larg - var->prec - *len, ' ');
-	return (ret);
-}
-
-int		ft_suite_conv(char c, t_var *var, va_list aq, int nb)
-{
-	va_list	aq2;
-	int		ret;
-	int		ret2;
-
-	va_copy(aq2, aq);
-	ret = 0;
-	if (c == 'd' || c == 'i' || c == 'x' || c == 'X' || c == 'u')
-	{
-		if (nb < 0 && var->att != 0)
-		{
-			ft_putchar('-');
-			ret++;
-		}
-		ret += ft_print_flag(var->prec, '0');
-	}
-	if ((ret2 = ft_print(c, var, aq, nb)) == -1)
-		return (-1);
-	ret += ret2;
 	return (ret);
 }
