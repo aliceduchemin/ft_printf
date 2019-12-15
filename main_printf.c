@@ -6,11 +6,10 @@
 /*   By: aduchemi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/09 17:04:58 by aduchemi          #+#    #+#             */
-/*   Updated: 2019/12/13 17:46:25 by aduchemi         ###   ########.fr       */
+/*   Updated: 2019/12/15 18:09:07 by aduchemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include "libft.h"
 
 int		ft_traitement(const char *s, int *i, t_var *var, va_list ap)

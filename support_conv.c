@@ -6,11 +6,10 @@
 /*   By: aduchemi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 16:14:07 by aduchemi          #+#    #+#             */
-/*   Updated: 2019/12/13 17:45:43 by aduchemi         ###   ########.fr       */
+/*   Updated: 2019/12/15 18:09:19 by aduchemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include "libft.h"
 
 int		ft_precision(char c, t_var *var, va_list aq, int *len)
