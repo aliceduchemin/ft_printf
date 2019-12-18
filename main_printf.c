@@ -6,7 +6,7 @@
 /*   By: aduchemi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/09 17:04:58 by aduchemi          #+#    #+#             */
-/*   Updated: 2019/12/15 18:09:07 by aduchemi         ###   ########.fr       */
+/*   Updated: 2019/12/18 16:10:24 by aduchemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,10 @@
 int		ft_traitement(const char *s, int *i, t_var *var, va_list ap)
 {
 	int		ret;
+	int		ret_prec;
 
 	ret = 0;
+	ret_prec = 0;
 	var->att = 1;
 	var->larg = 0;
 	var->prec = -2;
@@ -25,12 +27,12 @@ int		ft_traitement(const char *s, int *i, t_var *var, va_list ap)
 	if (s[*i] != '.')
 		ft_flag_larg(s, i, var);
 	if (s[*i] == '.')
-		ft_flag_prec(s, i, var);
+		ft_flag_prec(s, i, var, &ret_prec);
 	ft_compte(s, var, i);
 	ft_etoile(var, ap);
 	if ((ret = ft_conversion(s, i, var, ap)) == -1)
 		return (-1);
-	return (ret);
+	return (ret + ret_prec);
 }
 
 int		ft_printf(const char *s, ...)
@@ -48,6 +50,23 @@ int		ft_printf(const char *s, ...)
 	return (ret_fin);
 }
 
+int		ft_gestion(const char *s, int *i)
+{
+	int		t;
+
+	t = *i + 1;
+	while (s[t] != 'd' && s[t] != 'i' && s[t] != 'c' && s[t] != 's'
+			&& s[t] != 'x' && s[t] != 'X' && s[t] != 'p' && s[t] != 'u'
+			&& s[t] != '%' && s[t])
+		t++;
+	if (s[t] == '\0')
+	{
+		*i = t - 1;
+		return (-1);
+	}
+	return (0);
+}
+
 int		ft_boucle(const char *s, t_var *var, va_list ap, int *ret_fin)
 {
 	int		i;
@@ -63,10 +82,13 @@ int		ft_boucle(const char *s, t_var *var, va_list ap, int *ret_fin)
 			ft_print_invar('%', ret_fin, &i);
 		else
 		{
-			var->deb = i;
-			if ((ret = ft_traitement(s, &i, var, ap)) == -1)
-				return (-1);
-			*ret_fin = *ret_fin + ret;
+			if (ft_gestion(s, &i) == 0)
+			{
+				var->deb = i;
+				if ((ret = ft_traitement(s, &i, var, ap)) == -1)
+					return (-1);
+				*ret_fin = *ret_fin + ret;
+			}
 		}
 		i++;
 	}

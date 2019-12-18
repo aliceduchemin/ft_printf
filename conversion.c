@@ -6,7 +6,7 @@
 /*   By: aduchemi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 19:02:47 by aduchemi          #+#    #+#             */
-/*   Updated: 2019/12/13 17:46:20 by aduchemi         ###   ########.fr       */
+/*   Updated: 2019/12/18 15:17:57 by aduchemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,11 +70,8 @@ int		ft_cas_particuliers(char c, t_var *var, va_list aq, int *nb)
 		*nb = va_arg(aq2, int);
 		if (*nb < 0)
 			var->larg--;
-		else if (*nb == 0)
-		{
-			if (var->prec == 0 && var->larg == 0)
-				return (0);
-		}
+		else if (*nb == 0 && var->prec == 0 && var->larg == 0)
+			return (0);
 	}
 	else
 	{
@@ -91,22 +88,22 @@ int		ft_cas_part2(char c, t_var *var, va_list aq)
 	va_copy(aq2, aq);
 	if (c == 'u')
 	{
-		if (va_arg(aq2, unsigned int) == 0)
-		{
-			if (var->prec == 0 && var->larg == 0)
-				return (0);
-		}
+		if (va_arg(aq2, unsigned int) == 0 && var->prec == 0 && var->larg == 0)
+			return (0);
 	}
 	else if (c == 'x' || c == 'X')
 	{
-		if (va_arg(aq2, unsigned long) == 0)
-		{
-			if (var->prec == 0 && var->larg == 0)
-				return (0);
-		}
+		if (va_arg(aq2, unsigned long) == 0 && var->prec == 0
+				&& var->larg == 0)
+			return (0);
 	}
 	if (c == 'p')
-		var->larg -= 2;
+	{
+		if (var->prec == 0 && var->larg > 0 && va_arg(aq2, unsigned long) == 0)
+			var->larg -= 1;
+		else
+			var->larg -= 2;
+	}
 	return (1);
 }
 

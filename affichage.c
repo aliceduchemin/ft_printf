@@ -6,7 +6,7 @@
 /*   By: aduchemi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 19:02:47 by aduchemi          #+#    #+#             */
-/*   Updated: 2019/12/15 18:02:19 by aduchemi         ###   ########.fr       */
+/*   Updated: 2019/12/17 19:02:39 by aduchemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,14 @@ int		ft_print_hexa(char c, t_var *var, va_list aq, int *in)
 	if (c == 'p')
 	{
 		ft_putstr("0x");
-		ft_loop_hexa(va_arg(aq2, unsigned long), "0123456789abcdef", -1, in);
-		return (2);
+		if (var->prec != -2)
+		{
+			ft_loop_hexa(va_arg(aq2, unsigned long), "0123456789abcdef",
+					-1, in);
+			return (2);
+		}
+		else
+			return (1);
 	}
 	else if (va_arg(aq2, unsigned long) == 0)
 	{
