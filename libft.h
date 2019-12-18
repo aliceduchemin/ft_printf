@@ -6,7 +6,7 @@
 /*   By: aduchemi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 23:21:53 by aduchemi          #+#    #+#             */
-/*   Updated: 2019/12/18 16:11:04 by aduchemi         ###   ########.fr       */
+/*   Updated: 2019/12/18 17:06:07 by aduchemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int				ft_cas_part2(char c, t_var *var, va_list aq);
 int				ft_precision(char c, t_var *var, va_list aq, int *len);
 int				ft_suite_precision(char c, va_list aq, int *len);
 void			ft_conditions(t_var *var, int *len, char c, int *ret);
+void			ft_suite_cond(t_var *var, int *len, char c, int *ret);
 int				ft_print_att(t_var *var, int *nb, char c, int *len);
 int				ft_print_flag(int nb, char c);
 int				ft_str_vide(va_list aq, int flag, int indice);

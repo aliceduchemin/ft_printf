@@ -6,7 +6,7 @@
 /*   By: aduchemi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 16:14:07 by aduchemi          #+#    #+#             */
-/*   Updated: 2019/12/18 16:11:09 by aduchemi         ###   ########.fr       */
+/*   Updated: 2019/12/18 17:06:13 by aduchemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,11 @@ void	ft_conditions(t_var *var, int *len, char c, int *ret)
 		var->att = 1;
 	if (var->prec < 0)
 		var->prec = -2;
+	ft_suite_cond(var, len, c, ret);
+}
+
+void	ft_suite_cond(t_var *var, int *len, char c, int *ret)
+{
 	if (var->prec == 0 && c == 's')
 	{
 		var->prec = -1;
@@ -111,30 +116,4 @@ int		ft_str_vide(va_list aq, int flag, int indice)
 		return (i);
 	}
 	return (-1);
-}
-
-int		ft_print_char(va_list aq, t_var *var, int *ret)
-{
-	va_list aq2;
-	char	*str;
-	int		j;
-
-	va_copy(aq2, aq);
-	j = 0;
-	if (var->prec != -1)
-	{
-		str = va_arg(aq2, char *);
-		if (var->prec != 0)
-		{
-			while (j < var->prec)
-				ft_putchar(str[j++]);
-		}
-		else
-		{
-			while (str[j])
-				ft_putchar(str[j++]);
-		}
-	}
-	*ret = j;
-	return (0);
 }

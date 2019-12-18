@@ -6,7 +6,7 @@
 /*   By: aduchemi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 16:08:46 by aduchemi          #+#    #+#             */
-/*   Updated: 2019/12/18 16:11:07 by aduchemi         ###   ########.fr       */
+/*   Updated: 2019/12/18 17:06:44 by aduchemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,4 +62,30 @@ void	ft_flag_prec(const char *s, int *i, t_var *var, int *ret_prec)
 	}
 	else
 		var->prec = 0;
+}
+
+int		ft_print_char(va_list aq, t_var *var, int *ret)
+{
+	va_list aq2;
+	char	*str;
+	int		j;
+
+	va_copy(aq2, aq);
+	j = 0;
+	if (var->prec != -1)
+	{
+		str = va_arg(aq2, char *);
+		if (var->prec != 0)
+		{
+			while (j < var->prec)
+				ft_putchar(str[j++]);
+		}
+		else
+		{
+			while (str[j])
+				ft_putchar(str[j++]);
+		}
+	}
+	*ret = j;
+	return (0);
 }
