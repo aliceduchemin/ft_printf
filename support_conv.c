@@ -6,7 +6,7 @@
 /*   By: aduchemi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 16:14:07 by aduchemi          #+#    #+#             */
-/*   Updated: 2019/12/18 17:06:13 by aduchemi         ###   ########.fr       */
+/*   Updated: 2019/12/23 19:04:25 by aduchemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,11 @@ int		ft_suite_precision(char c, va_list aq, int *len)
 		*len = ft_len_int(va_arg(aq2, int));
 	else if (c == 'u')
 		ft_loop_u(va_arg(aq2, unsigned int), 0, len);
-	else if (c == 'p' || c == 'x' || c == 'X')
-		ft_loop_hexa(va_arg(aq2, unsigned long), "0123456789abcdef", 0, len);
+	else if (c == 'p')
+		ft_loop((unsigned long)(va_arg(aq2, void *)),
+				"0123456789abcdef", 0, len);
+	else if (c == 'x' || c == 'X')
+		ft_loop(va_arg(aq2, unsigned int), "0123456789abcdef", 0, len);
 	else if (c == '%')
 		*len = 1;
 	ret = *len;

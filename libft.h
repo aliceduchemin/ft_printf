@@ -6,7 +6,7 @@
 /*   By: aduchemi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 23:21:53 by aduchemi          #+#    #+#             */
-/*   Updated: 2019/12/18 17:06:07 by aduchemi         ###   ########.fr       */
+/*   Updated: 2019/12/23 19:03:03 by aduchemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ int				ft_traitement(const char *s, int *i, t_var *var, va_list ap);
 void			ft_attributs(const char *s, int *i, t_var *var);
 void			ft_flag_larg(const char *s, int *i, t_var *var);
 void			ft_flag_prec(const char *s, int *i, t_var *var, int *ret_prec);
+void			ft_flag_prec_2(const char *s, int *i, t_var *var,
+				int *ret_prec);
 void			ft_compte(const char *s, t_var *var, int *i);
 void			ft_etoile(t_var *var, va_list ap);
 void			ft_suite_etoile(t_var *var, va_list ap);
@@ -49,8 +51,8 @@ int				ft_print_att(t_var *var, int *nb, char c, int *len);
 int				ft_print_flag(int nb, char c);
 int				ft_str_vide(va_list aq, int flag, int indice);
 int				ft_len_int(int n);
+void			ft_loop(unsigned long nb, char *base, int ind, int *len);
 void			ft_loop_u(unsigned int nb, int ind, int *len);
-void			ft_loop_hexa(unsigned long nb, char *base, int ind, int *len);
 void			ft_print_nb(int nb);
 int				ft_print_char(va_list aq, t_var *var, int *ret);
 int				ft_print(char c, t_var *var, va_list aq, int nb);

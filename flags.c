@@ -6,7 +6,7 @@
 /*   By: aduchemi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 16:08:46 by aduchemi          #+#    #+#             */
-/*   Updated: 2019/12/18 17:06:44 by aduchemi         ###   ########.fr       */
+/*   Updated: 2019/12/23 19:01:31 by aduchemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,37 @@ void	ft_attributs(const char *s, int *i, t_var *var)
 
 void	ft_flag_larg(const char *s, int *i, t_var *var)
 {
-	if (ft_isdigit(s[*i]))
+	while (ft_isdigit(s[*i]))
 	{
-		var->larg = ft_atoi(ft_substr(s, *i, ft_strlen(s)));
-		*i = *i + ft_len_int(var->larg);
+		var->larg = var->larg * 10 + s[*i] - 48;
+		*i = *i + 1;
 	}
-	else if (s[*i] == '*')
+	if (s[*i] == '*')
 	{
 		var->larg = -1;
 		*i = *i + 1;
+	}
+}
+
+void	ft_flag_prec_2(const char *s, int *i, t_var *var, int *ret_prec)
+{
+	var->prec = 0;
+	if (s[*i - 1] == '-')
+	{
+		while (ft_isdigit(s[*i]))
+		{
+			*ret_prec = *ret_prec * 10 + s[*i] - 48;
+			*i = *i + 1;
+		}
+		var->prec = 0;
+	}
+	else
+	{
+		while (ft_isdigit(s[*i]))
+		{
+			var->prec = var->prec * 10 + s[*i] - 48;
+			*i = *i + 1;
+		}
 	}
 }
 
@@ -46,15 +68,7 @@ void	ft_flag_prec(const char *s, int *i, t_var *var, int *ret_prec)
 	if (s[*i] == '-')
 		*i = *i + 1;
 	if (ft_isdigit(s[*i]))
-	{
-		var->prec = ft_atoi(ft_substr(s, *i, ft_strlen(s)));
-		if (s[*i - 1] == '-')
-		{
-			*ret_prec = var->prec;
-			var->prec = 0;
-		}
-		*i = *i + ft_len_int(var->prec);
-	}
+		ft_flag_prec_2(s, i, var, ret_prec);
 	else if (s[*i] == '*')
 	{
 		var->prec = -1;

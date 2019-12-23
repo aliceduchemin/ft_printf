@@ -6,7 +6,7 @@
 /*   By: aduchemi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 18:54:48 by aduchemi          #+#    #+#             */
-/*   Updated: 2019/12/15 18:02:27 by aduchemi         ###   ########.fr       */
+/*   Updated: 2019/12/22 19:10:36 by aduchemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,19 @@ int		ft_len_int(int n)
 	return (i);
 }
 
+void	ft_loop(unsigned long nb, char *base, int ind, int *len)
+{
+	if (nb > (ft_strlen(base) - 1))
+	{
+		ft_loop(nb / ft_strlen(base), base, ind, len);
+		nb = nb % ft_strlen(base);
+	}
+	if (ind == -1)
+		ft_putchar(base[nb]);
+	else
+		*len = *len + 1;
+}
+
 void	ft_loop_u(unsigned int nb, int ind, int *len)
 {
 	if (nb > 9)
@@ -55,19 +68,6 @@ void	ft_loop_u(unsigned int nb, int ind, int *len)
 	}
 	if (ind == -1)
 		ft_putchar(nb + 48);
-	else
-		*len = *len + 1;
-}
-
-void	ft_loop_hexa(unsigned long nb, char *base, int ind, int *len)
-{
-	if (nb > 15)
-	{
-		ft_loop_hexa(nb / 16, base, ind, len);
-		nb = nb % 16;
-	}
-	if (ind == -1)
-		ft_putchar(base[nb]);
 	else
 		*len = *len + 1;
 }

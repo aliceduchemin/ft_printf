@@ -6,7 +6,7 @@
 /*   By: aduchemi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 17:07:21 by aduchemi          #+#    #+#             */
-/*   Updated: 2019/12/18 17:07:23 by aduchemi         ###   ########.fr       */
+/*   Updated: 2019/12/23 19:00:47 by aduchemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int		ft_print(char c, t_var *var, va_list aq, int nb)
 			return (-1);
 	}
 	else if (c == 'c')
-		ft_putchar(va_arg(aq2, int));
+		ft_putchar((unsigned char)(va_arg(aq2, int)));
 	else
 		ret = ft_suite_print(c, var, aq, nb);
 	return (ret);
@@ -58,16 +58,18 @@ int		ft_suite_print(char c, t_var *var, va_list aq, int nb)
 
 void	ft_suite2_print(char c, t_var *var, va_list aq, int *ret)
 {
-	va_list	aq2;
-	va_list	aq3;
-	int		*in;
+	va_list			aq2;
+	va_list			aq3;
+	int				*in;
+	unsigned int	test;
 
 	va_copy(aq2, aq);
 	va_copy(aq3, aq);
 	in = 0;
 	if (c == 'u')
 	{
-		if (va_arg(aq2, unsigned int) == 0)
+		test = va_arg(aq2, unsigned int);
+		if (test == 0)
 		{
 			if (var->prec != -2)
 				ft_putchar('0');
@@ -91,14 +93,14 @@ int		ft_print_hexa(char c, t_var *var, va_list aq, int *in)
 		ft_putstr("0x");
 		if (var->prec != -2)
 		{
-			ft_loop_hexa(va_arg(aq2, unsigned long), "0123456789abcdef",
+			ft_loop((unsigned long)(va_arg(aq2, void *)), "0123456789abcdef",
 					-1, in);
 			return (2);
 		}
 		else
 			return (1);
 	}
-	else if (va_arg(aq2, unsigned long) == 0)
+	else if (va_arg(aq2, unsigned int) == 0)
 	{
 		if (var->prec != -2)
 			ft_putchar('0');
@@ -116,7 +118,7 @@ void	ft_suite_hexa(char c, va_list aq, int *in)
 
 	va_copy(aq2, aq);
 	if (c == 'x')
-		ft_loop_hexa(va_arg(aq2, unsigned long), "0123456789abcdef", -1, in);
+		ft_loop(va_arg(aq2, unsigned int), "0123456789abcdef", -1, in);
 	else if (c == 'X')
-		ft_loop_hexa(va_arg(aq2, unsigned long), "0123456789ABCDEF", -1, in);
+		ft_loop(va_arg(aq2, unsigned int), "0123456789ABCDEF", -1, in);
 }

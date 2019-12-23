@@ -37,6 +37,5 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 		j++;
 	}
 	s2[j] = 0;
-	free(s2);
 	return (s2);
 }
