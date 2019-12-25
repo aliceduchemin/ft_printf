@@ -6,7 +6,7 @@
 /*   By: aduchemi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 19:02:47 by aduchemi          #+#    #+#             */
-/*   Updated: 2019/12/23 19:01:54 by aduchemi         ###   ########.fr       */
+/*   Updated: 2019/12/25 16:19:29 by aduchemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,17 +86,12 @@ int		ft_cas_part2(char c, t_var *var, va_list aq)
 	va_list	aq2;
 
 	va_copy(aq2, aq);
-	if (c == 'u')
+	if (c == 'u' || c == 'x' || c == 'X')
 	{
 		if (va_arg(aq2, unsigned int) == 0 && var->prec == 0 && var->larg == 0)
 			return (0);
 	}
-	if (c == 'x' || c == 'X')
-	{
-		if (va_arg(aq2, unsigned int) == 0 && var->prec == 0 && var->larg == 0)
-			return (0);
-	}
-	if (c == 'p')
+	else if (c == 'p')
 	{
 		if (var->prec == 0 && var->larg > 0
 				&& (unsigned long)(va_arg(aq2, void *)) == 0)

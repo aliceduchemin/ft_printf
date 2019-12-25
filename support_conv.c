@@ -6,7 +6,7 @@
 /*   By: aduchemi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 16:14:07 by aduchemi          #+#    #+#             */
-/*   Updated: 2019/12/23 19:04:25 by aduchemi         ###   ########.fr       */
+/*   Updated: 2019/12/25 16:28:33 by aduchemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,8 @@ int		ft_precision(char c, t_var *var, va_list aq, int *len)
 int		ft_suite_precision(char c, va_list aq, int *len)
 {
 	va_list	aq2;
-	int		ret;
 
 	va_copy(aq2, aq);
-	ret = 0;
 	if (c == 'c')
 		*len = 1;
 	else if (c == 'i' || c == 'd')
@@ -59,8 +57,7 @@ int		ft_suite_precision(char c, va_list aq, int *len)
 		ft_loop(va_arg(aq2, unsigned int), "0123456789abcdef", 0, len);
 	else if (c == '%')
 		*len = 1;
-	ret = *len;
-	return (ret);
+	return (*len);
 }
 
 void	ft_conditions(t_var *var, int *len, char c, int *ret)

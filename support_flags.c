@@ -6,7 +6,7 @@
 /*   By: aduchemi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 16:13:28 by aduchemi          #+#    #+#             */
-/*   Updated: 2019/12/22 19:10:39 by aduchemi         ###   ########.fr       */
+/*   Updated: 2019/12/25 15:52:53 by aduchemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,23 +55,19 @@ void	ft_suite_etoile(t_var *var, va_list ap)
 {
 	va_list	aq;
 	int		n;
-	int		tmp;
 
 	va_copy(aq, ap);
 	n = 1;
-	tmp = 0;
 	while (n++ < (var->n_arg - 1))
 		va_arg(aq, int);
 	if (var->larg == -1)
 	{
-		tmp = va_arg(aq, int);
-		if (tmp < 0)
+		var->larg = va_arg(aq, int);
+		if (var->larg < 0)
 		{
-			var->larg = tmp * -1;
+			var->larg *= -1;
 			var->att = -1;
 		}
-		else
-			var->larg = tmp;
 	}
 	else
 		var->prec = va_arg(aq, int);
