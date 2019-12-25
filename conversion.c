@@ -6,7 +6,7 @@
 /*   By: aduchemi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 19:02:47 by aduchemi          #+#    #+#             */
-/*   Updated: 2019/12/25 16:19:29 by aduchemi         ###   ########.fr       */
+/*   Updated: 2019/12/25 19:08:26 by aduchemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,10 @@ int		ft_conversion(const char *s, int *i, t_var *var, va_list ap)
 	if ((ret = ft_cas_particuliers(s[*i], var, aq, &nb)) != 1)
 		return (ret);
 	ret = ft_precision(s[*i], var, aq, &len);
+	if (s[*i] == '%' && var->att == 0)
+		ret += ft_print_flag(var->prec, '0');
+	else if (s[*i] == '%' && var->att == 1)
+		ret += ft_print_flag(var->prec, ' ');
 	ret += ft_print_att(var, &nb, s[*i], &len);
 	ret += ft_suite_conv(s[*i], var, aq, nb);
 	if (var->att == -1)
@@ -52,10 +56,15 @@ int		ft_suite_conv(char c, t_var *var, va_list aq, int nb)
 			ft_putchar('-');
 			ret++;
 		}
-		ret += ft_print_flag(var->prec, '0');
+		if (c == '%' && var->att != 0)
+			ret += ft_print_flag(var->prec, ' ');
+		else
+			ret += ft_print_flag(var->prec, '0');
 	}
 	if ((ret2 = ft_print(c, var, aq, nb)) == -1)
 		return (-1);
+	if (c == '%' && var->att == -1)
+		ret += ft_print_flag(var->prec, ' ');
 	ret += ret2;
 	return (ret);
 }
