@@ -6,7 +6,7 @@
 /*   By: aduchemi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/18 17:07:21 by aduchemi          #+#    #+#             */
-/*   Updated: 2019/12/23 19:00:47 by aduchemi         ###   ########.fr       */
+/*   Updated: 2019/12/26 12:33:02 by aduchemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,15 +61,13 @@ void	ft_suite2_print(char c, t_var *var, va_list aq, int *ret)
 	va_list			aq2;
 	va_list			aq3;
 	int				*in;
-	unsigned int	test;
 
 	va_copy(aq2, aq);
 	va_copy(aq3, aq);
 	in = 0;
 	if (c == 'u')
 	{
-		test = va_arg(aq2, unsigned int);
-		if (test == 0)
+		if (va_arg(aq2, unsigned int) == 0)
 		{
 			if (var->prec != -2)
 				ft_putchar('0');

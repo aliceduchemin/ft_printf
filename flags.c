@@ -6,7 +6,7 @@
 /*   By: aduchemi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 16:08:46 by aduchemi          #+#    #+#             */
-/*   Updated: 2019/12/23 19:01:31 by aduchemi         ###   ########.fr       */
+/*   Updated: 2019/12/26 12:33:11 by aduchemi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ void	ft_flag_prec_2(const char *s, int *i, t_var *var, int *ret_prec)
 			*ret_prec = *ret_prec * 10 + s[*i] - 48;
 			*i = *i + 1;
 		}
-		var->prec = 0;
 	}
 	else
 	{
